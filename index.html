@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+  <!-- Primary Meta Tags -->
+  <title>Stash Lopes — The Developer Comic | Portfolio</title>
+  <meta name="title" content="Stash Lopes — The Developer Comic | Portfolio" />
+  <meta name="description" content="Official developer portfolio of Stash Lopes (stashlop) — IT Engineer, AI/ML Developer & Full-Stack Engineer. An interactive graphic novel developer experience." />
+  <meta name="keywords" content="Stash Lopes, stashlop, IT Engineer, AI Developer, Machine Learning, Vertex AI, Full-Stack, Python, Flask, Node.js, Developer Comic Portfolio" />
+  <meta name="author" content="Stash Lopes" />
+
+  <!-- Open Graph / Facebook / LinkedIn -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://github.com/stashlop" />
+  <meta property="og:title" content="Stash Lopes — The Developer Comic Portfolio" />
+  <meta property="og:description" content="Turning ideas into things that actually work. Explore the developer comic issue of Stash Lopes: AI/ML, Cloud Systems, and Full-Stack missions." />
+  <meta property="og:image" content="assets/images/hero-avatar.jpg" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💥</text></svg>" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="styles/main.css" />
+</head>
+<body>
+
+  <!-- Halftone Pattern Texture Overlay -->
+  <div class="halftone-overlay" aria-hidden="true"></div>
+
+  <!-- Dynamic Comic Pop Sound Effects Layer -->
+  <div id="comic-sfx-layer" aria-hidden="true"></div>
+
+  <!-- =========================================================================
+       HEADER NAVIGATION: Fixed Comic Issue Tabs
+       ========================================================================= -->
+  <header class="comic-header" id="main-header" role="banner">
+    <div class="header-inner">
+      <a href="#cover" class="comic-logo" aria-label="Stash Lopes Comic Portfolio Home">
+        <span class="logo-badge">VOL. 01</span>
+        <span class="logo-text">STASH <span>LOPES</span></span>
+      </a>
+
+      <nav role="navigation" aria-label="Main Portfolio Navigation">
+        <button class="mobile-toggle" id="mobile-menu-toggle" aria-label="Toggle Mobile Navigation Menu">
+          ☰
+        </button>
+        <ul class="comic-nav-tabs" id="comic-nav-links">
+          <li><a href="#origin" class="comic-nav-link">#01 ORIGIN</a></li>
+          <li><a href="#arsenal" class="comic-nav-link">#02 ARSENAL</a></li>
+          <li><a href="#missions" class="comic-nav-link">#03 MISSIONS</a></li>
+          <li><a href="#journey" class="comic-nav-link">#04 JOURNEY</a></li>
+          <li><a href="#command-center" class="comic-nav-link">#GITHUB</a></li>
+          <li><a href="#contact" class="comic-nav-link">#05 CONTACT</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-controls">
+        <button class="sfx-toggle-btn" id="btn-toggle-sound" aria-label="Toggle Comic Audio Sound Effects">
+          <span>🔊 SFX ON</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main role="main">
+
+    <!-- =======================================================================
+         CHAPTER 00: COMIC COVER / HERO SECTION
+         ======================================================================= -->
+    <section class="comic-section hero-cover-section" id="cover" aria-labelledby="hero-title">
+      <div class="comic-cover-container">
+        
+        <!-- Top Issue Badge Bar -->
+        <div class="cover-header-stripe">
+          <span>SPECIAL COLLECTOR'S EDITION • ALL-NEW DEVELOPER COMICS</span>
+          <span class="cover-price-box">$0.00 FREE ON GITHUB</span>
+          <span>APPROVED BY THE CODE AUTHORITY</span>
+        </div>
+
+        <div class="cover-main-grid">
+          
+          <!-- Left Narrative Content -->
+          <div class="cover-left-content">
+            <div class="comic-narration-box">
+              MEANWHILE IN THE LAB...
+            </div>
+
+            <h1 class="cover-hero-title" id="hero-title">
+              STASH<br />LOPES
+            </h1>
+
+            <div class="cover-subtitle-stripe">
+              <div class="cover-role-text">
+                IT ENGINEER • DEVELOPER • AI/ML ENTHUSIAST
+              </div>
+            </div>
+
+            <a href="#missions" class="current-mission-banner">
+              <span class="pulse-dot"></span>
+              <span>ACTIVE MISSION IN PROGRESS: <strong>BIDWARS</strong> (Real-Time Bidding Matrix)</span>
+              <span>→</span>
+            </a>
+
+            <div class="comic-speech-bubble">
+              “Turning ideas into things that actually work.”
+              <span class="speech-author">— Stash Lopes // Dev Protagonist</span>
+            </div>
+
+            <div class="cover-cta-row">
+              <a href="#origin" class="comic-btn btn-red" id="btn-start-story">
+                <span>START THE STORY</span>
+                <span>→</span>
+              </a>
+              <a href="#missions" class="comic-btn btn-gold" id="btn-view-projects">
+                <span>VIEW MY PROJECTS</span>
+                <span>⚡</span>
+              </a>
+              <a href="https://github.com/stashlop" target="_blank" rel="noopener noreferrer" class="comic-btn btn-dark">
+                <span>GITHUB MATRIX</span>
+                <span>🐙</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Right Comic Cover Illustration Frame -->
+          <div class="cover-right-art">
+            <div class="hero-art-frame">
+              <img src="assets/images/stash-photo.jpg" alt="Stash Lopes — IT Engineer & Developer" id="hero-main-avatar" class="hero-avatar-image" />
+              <div class="floating-action-sticker" id="hero-sticker">COMPILE!</div>
+              <div class="floating-hud-badge">
+                IDENTITY: STASH LOPES • GITHUB: @stashlop
+              </div>
+            </div>
+
+            <!-- Avatar Style Switcher -->
+            <div class="avatar-mode-switcher">
+              <button type="button" class="avatar-switch-btn active" id="btn-photo-mode" data-img="assets/images/stash-photo.jpg">
+                <span>📸 REAL PHOTO</span>
+              </button>
+              <button type="button" class="avatar-switch-btn" id="btn-comic-mode" data-img="assets/images/hero-avatar.jpg">
+                <span>⚡ COMIC AVATAR</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         CHAPTER 01: ORIGIN STORY
+         ======================================================================= -->
+    <section class="comic-section" id="origin" aria-labelledby="origin-title">
+      <div class="section-issue-header">
+        <div class="issue-stamp-container">
+          <span class="issue-number-badge">ISSUE #01</span>
+          <span class="issue-cca-seal">VERIFIED CANON</span>
+        </div>
+        <h2 class="section-comic-title" id="origin-title">ORIGIN STORY</h2>
+        <p class="section-comic-sub">// THE ARCHITECTURE OF A BUILDER</p>
+      </div>
+
+      <div class="origin-panels-grid">
+        
+        <!-- Panel 1: The Foundation -->
+        <article class="comic-panel panel-col-8">
+          <div class="panel-tag-header">
+            <span class="panel-label">PANEL 1.1 — THE GENESIS</span>
+            <span class="comic-narration-box" style="font-size:0.75rem; padding: 2px 8px;">EARLY DAYS</span>
+          </div>
+          <h3 class="panel-heading">ENGINEERING THE FUTURE FROM FIRST PRINCIPLES</h3>
+          <p class="panel-body-text">
+            Every great developer story starts with curiosity. As an <strong>Information Technology Engineering student and developer</strong>, I set out not just to learn syntax, but to engineer robust, tangible systems that solve real-world problems.
+          </p>
+          <p class="panel-body-text">
+            From crafting algorithmic workflows to training deep computer vision models, my focus has consistently been bridging theoretical computing with production-ready software.
+          </p>
+        </article>
+
+        <!-- Panel 2: The Core Disciplines -->
+        <article class="comic-panel panel-col-4">
+          <div class="panel-tag-header">
+            <span class="panel-label">PANEL 1.2 — DISCIPLINES</span>
+          </div>
+          <h3 class="panel-heading">SPECIALIZED FIELDS</h3>
+          <div class="panel-interests-grid">
+            <div class="interest-badge"><span>🤖</span> AI / ML</div>
+            <div class="interest-badge"><span>🌐</span> Web Dev</div>
+            <div class="interest-badge"><span>☁️</span> Cloud & Ops</div>
+            <div class="interest-badge"><span>🎮</span> Gaming / Tech</div>
+          </div>
+        </article>
+
+        <!-- Panel 3: The Philosophy -->
+        <article class="comic-panel panel-col-6">
+          <div class="panel-tag-header">
+            <span class="panel-label">PANEL 1.3 — CODE PHILOSOPHY</span>
+          </div>
+          <h3 class="panel-heading">“SHIP CODE THAT MATTERS”</h3>
+          <p class="panel-body-text">
+            Whether building <strong>Karigar</strong> to preserve cultural artisan heritage with Google Vertex AI or constructing <strong>Project Drishti</strong> for life-safety hazard detection, technology is at its best when it delivers genuine human and operational utility.
+          </p>
+        </article>
+
+        <!-- Panel 4: The Tech Evolution -->
+        <article class="comic-panel panel-col-6">
+          <div class="panel-tag-header">
+            <span class="panel-label">PANEL 1.4 — CONTINUOUS EVOLUTION</span>
+          </div>
+          <h3 class="panel-heading">ALWAYS IN THE COMPILER</h3>
+          <p class="panel-body-text">
+            Engineering isn't static. My journey spans Python microservices, modern TypeScript/JavaScript web ecosystems, automated Jenkins CI/CD pipelines, containerized Docker fleets, and offline local LLM acceleration on Apple Silicon.
+          </p>
+        </article>
+
+        <!-- Panel 5: Organization Syndicate (CodedbyAKSA) -->
+        <article class="comic-panel panel-col-6">
+          <div class="panel-tag-header">
+            <span class="panel-label">PANEL 1.5 — ENGINEERING GUILD: CODEDBYAKSA</span>
+            <span class="comic-narration-box" style="font-size:0.75rem; padding: 2px 8px;">COLLECTIVE</span>
+          </div>
+          <h3 class="panel-heading">CODEDBYAKSA // QUEST PARTY</h3>
+          <p class="panel-body-text">
+            Beyond solo missions, I build with <strong><a href="https://github.com/CodedbyAKSA" target="_blank" rel="noopener noreferrer" style="color: var(--comic-gold); text-decoration: underline;">CodedbyAKSA</a></strong> — an engineering syndicate embarking on high-impact quests across codebases, crafting AI solutions, and shipping scalable platforms.
+          </p>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
+            <a href="https://github.com/CodedbyAKSA" target="_blank" rel="noopener noreferrer" class="comic-btn btn-gold" style="padding: 6px 14px; font-size: 0.8rem;">
+              <span>CODEDBYAKSA</span>
+              <span>⚔️</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Panel 6: Industry Experience (Volt-Amp Logic Controls) -->
+        <article class="comic-panel panel-col-6">
+          <div class="panel-tag-header">
+            <span class="panel-label">PANEL 1.6 — INDUSTRY FIELDWORK</span>
+            <span class="comic-narration-box" style="font-size:0.75rem; padding: 2px 8px;">6-MONTH INTERNSHIP</span>
+          </div>
+          <h3 class="panel-heading">VOLT-AMP LOGIC CONTROLS</h3>
+          <p class="panel-body-text">
+            Associated as <strong>Software Development Intern</strong> at <strong>Volt-Amp Logic Controls Pvt. Ltd.</strong> (Intelligent Instrumentation) from <strong>31-Jan-2026 to 1-Aug-2026</strong>. Delivered robust software systems, met tight engineering timelines, and maintained high reliability standards.
+          </p>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px;">
+            <div class="interest-badge" style="font-size:0.75rem; padding: 3px 8px;"><span>⚡</span> Instrumentation</div>
+            <div class="interest-badge" style="font-size:0.75rem; padding: 3px 8px;"><span>🛡️</span> Production Quality</div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         CHAPTER 02: THE ARSENAL (SKILLS)
+         ======================================================================= -->
+    <section class="comic-section" id="arsenal" aria-labelledby="arsenal-title">
+      <div class="section-issue-header">
+        <div class="issue-stamp-container">
+          <span class="issue-number-badge">ISSUE #02</span>
+          <span class="issue-cca-seal">ABILITY CARDS</span>
+        </div>
+        <h2 class="section-comic-title" id="arsenal-title">THE ARSENAL</h2>
+        <p class="section-comic-sub">// COLLECTIBLE ABILITY CARDS VERIFIED FROM GITHUB CODEBASES</p>
+      </div>
+
+      <!-- Filter Controls -->
+      <div class="arsenal-filter-bar" role="tablist" aria-label="Filter Technical Skills">
+        <button class="arsenal-filter-btn active" data-category="all" role="tab" aria-selected="true">⚡ ALL ABILITIES</button>
+        <button class="arsenal-filter-btn" data-category="languages" role="tab" aria-selected="false">📜 LANGUAGES</button>
+        <button class="arsenal-filter-btn" data-category="ai" role="tab" aria-selected="false">🧠 AI / ML</button>
+        <button class="arsenal-filter-btn" data-category="web" role="tab" aria-selected="false">🌐 WEB & FRAMEWORKS</button>
+        <button class="arsenal-filter-btn" data-category="cloud" role="tab" aria-selected="false">☁️ CLOUD & DEVOPS</button>
+        <button class="arsenal-filter-btn" data-category="creative" role="tab" aria-selected="false">🎨 CREATIVE & TOOLS</button>
+      </div>
+
+      <!-- Ability Cards Grid (Populated dynamically) -->
+      <div class="arsenal-cards-grid" id="arsenal-grid" role="region" aria-live="polite">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         CHAPTER 03: MISSIONS (PROJECTS)
+         ======================================================================= -->
+    <section class="comic-section" id="missions" aria-labelledby="missions-title">
+      <div class="section-issue-header">
+        <div class="issue-stamp-container">
+          <span class="issue-number-badge">ISSUE #03</span>
+          <span class="issue-cca-seal">CLASSIFIED DOSSIERS</span>
+        </div>
+        <h2 class="section-comic-title" id="missions-title">MISSIONS</h2>
+        <p class="section-comic-sub">// FEATURED TECHNICAL OPERATIONS & REPOSITORY SHOWCASES</p>
+      </div>
+
+      <!-- Mission Covers Grid -->
+      <div class="missions-grid-container" id="missions-grid">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         CHAPTER 04: THE JOURNEY (MILESTONE TIMELINE)
+         ======================================================================= -->
+    <section class="comic-section" id="journey" aria-labelledby="journey-title">
+      <div class="section-issue-header">
+        <div class="issue-stamp-container">
+          <span class="issue-number-badge">ISSUE #04</span>
+          <span class="issue-cca-seal">HISTORICAL TIMELINE</span>
+        </div>
+        <h2 class="section-comic-title" id="journey-title">THE JOURNEY</h2>
+        <p class="section-comic-sub">// CANONICAL MILESTONES, HACKATHONS & ENGINEERING ROADMAP</p>
+      </div>
+
+      <div class="timeline-panels-wrapper" id="timeline-panels">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         THE COMMAND CENTER (GITHUB LIVE TELEMETRY)
+         ======================================================================= -->
+    <section class="comic-section" id="command-center" aria-labelledby="command-title">
+      <div class="section-issue-header">
+        <div class="issue-stamp-container">
+          <span class="issue-number-badge">LIVE HUD</span>
+          <span class="issue-cca-seal">API SYNCHRONIZED</span>
+        </div>
+        <h2 class="section-comic-title" id="command-title">THE COMMAND CENTER</h2>
+        <p class="section-comic-sub">// REAL-TIME GITHUB REPOSITORY & TELEMETRY STREAM</p>
+      </div>
+
+      <div class="command-center-box">
+        
+        <!-- Live Stat HUD Counters -->
+        <div class="command-hud-grid">
+          <div class="hud-stat-tile">
+            <span class="hud-stat-label">PUBLIC REPOSITORIES</span>
+            <span class="hud-stat-val" id="stat-public-repos">26</span>
+          </div>
+          <div class="hud-stat-tile">
+            <span class="hud-stat-label">STAR TELEMETRY</span>
+            <span class="hud-stat-val" id="stat-total-stars">15+</span>
+          </div>
+          <div class="hud-stat-tile">
+            <span class="hud-stat-label">PRIMARY ARSENAL</span>
+            <span class="hud-stat-val">PYTHON</span>
+          </div>
+          <div class="hud-stat-tile">
+            <span class="hud-stat-label">CODEBASE STATUS</span>
+            <span class="hud-stat-val" style="color: var(--comic-green);">ONLINE</span>
+          </div>
+        </div>
+
+        <!-- Telemetry Row: Interactive Terminal + Language Distribution -->
+        <div class="command-telemetry-row">
+          
+          <!-- Terminal CLI Simulator -->
+          <div class="terminal-mock-box">
+            <div class="terminal-titlebar">
+              <span class="terminal-dot dot-red"></span>
+              <span class="terminal-dot dot-yellow"></span>
+              <span class="terminal-dot dot-green"></span>
+              <span>stashlop@matrix-core:~ (bash)</span>
+            </div>
+            <div class="terminal-logs" id="terminal-logs">
+              <div class="terminal-line bot-res">System initialized. Welcome to Stash Lopes Command Center.</div>
+              <div class="terminal-line bot-res">Type <code>help</code> to discover commands or <code>sudo hire stash</code> for immediate recruiter action.</div>
+            </div>
+            <div class="terminal-input-row">
+              <span class="terminal-prompt">$</span>
+              <input type="text" class="terminal-cmd-input" id="terminal-cmd-input" placeholder="Type a command (e.g. help, skills, missions, whoami)..." autocomplete="off" />
+            </div>
+          </div>
+
+          <!-- Language Breakdown Panel -->
+          <div class="github-lang-panel">
+            <h3 class="lang-panel-title">📊 REPOSITORY LANGUAGE DIVERSITY</h3>
+            <div id="github-lang-breakdown">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Live Repository Grid -->
+        <h3 style="color: var(--ink-white); font-size: 1.6rem; margin-bottom: 18px;">
+          📦 ACTIVE CODE VAULT
+        </h3>
+        <div class="command-repos-grid" id="github-repos-grid">
+          <!-- Rendered via JS -->
+        </div>
+
+        <div class="command-center-cta">
+          <a href="https://github.com/stashlop" target="_blank" rel="noopener noreferrer" class="comic-btn btn-gold" style="font-size: 1.1rem; padding: 14px 32px;">
+            <span>EXPLORE MY CODE ON GITHUB</span>
+            <span>🐙</span>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         CHAPTER 05: FINAL BOSS (CONTACT & ENGAGEMENT)
+         ======================================================================= -->
+    <section class="comic-section" id="contact" aria-labelledby="contact-title">
+      <div class="section-issue-header">
+        <div class="issue-stamp-container">
+          <span class="issue-number-badge">ISSUE #05</span>
+          <span class="issue-cca-seal">ISSUE FINALE</span>
+        </div>
+        <h2 class="section-comic-title" id="contact-title">FINAL BOSS: GOT A MISSION?</h2>
+        <p class="section-comic-sub">// TRANSMIT YOUR BRIEF FOR THE NEXT ISSUE</p>
+      </div>
+
+      <div class="final-boss-panel">
+        
+        <!-- Atmospheric Climax Backdrop -->
+        <div class="boss-art-backdrop">
+          <img src="assets/images/final-boss.jpg" alt="Final Boss AI Command Matrix" class="boss-bg-img" />
+          <div class="boss-backdrop-overlay"></div>
+        </div>
+
+        <div class="boss-content-wrapper">
+          
+          <!-- Left Pitch & Social Links -->
+          <div class="boss-info-col">
+            <h3 class="boss-headline">LET'S BUILD SOMETHING EPIC.</h3>
+            <p class="boss-quote">
+              “Let’s build something worth putting in the next issue.”
+            </p>
+            <p style="color: var(--text-secondary); margin-bottom: 24px; font-size: 1rem;">
+              Whether you're looking for a high-performing <strong>IT Engineer, AI/ML Developer</strong>, full-stack collaborator, or someone to spearhead innovative cloud architectures, I'm always open for the next big mission.
+            </p>
+
+            <div class="boss-quick-links">
+              <a href="https://github.com/stashlop" target="_blank" rel="noopener noreferrer" class="comic-btn btn-dark">
+                <span>GITHUB</span>
+                <span>🐙</span>
+              </a>
+              <a href="https://www.linkedin.com/in/stash-lopes-176068333/" target="_blank" rel="noopener noreferrer" class="comic-btn btn-dark">
+                <span>LINKEDIN</span>
+                <span>💼</span>
+              </a>
+              <a href="https://github.com/CodedbyAKSA" target="_blank" rel="noopener noreferrer" class="comic-btn btn-gold">
+                <span>CODEDBYAKSA ORG</span>
+                <span>⚔️</span>
+              </a>
+              <a href="mailto:stashlopes@gmail.com" class="comic-btn btn-red">
+                <span>DIRECT EMAIL</span>
+                <span>📧</span>
+              </a>
+            </div>
+
+            <div class="boss-cliffhanger">
+              TO BE CONTINUED...
+            </div>
+          </div>
+
+          <!-- Right Comic Contact Terminal Form -->
+          <div class="boss-form-col">
+            <form class="comic-form-box" id="comic-contact-form" novalidate>
+              <div class="form-group">
+                <label for="contact-name" class="form-label">OPERATIVE NAME</label>
+                <input type="text" id="contact-name" class="form-input" placeholder="e.g. Director Nick Fury / Recruiter" required />
+              </div>
+
+              <div class="form-group">
+                <label for="contact-email" class="form-label">COMMUNICATION FREQUENCY (EMAIL)</label>
+                <input type="email" id="contact-email" class="form-input" placeholder="operative@organization.com" required />
+              </div>
+
+              <div class="form-group">
+                <label for="contact-message" class="form-label">MISSION BRIEF / TRANSMISSION</label>
+                <textarea id="contact-message" class="form-textarea" placeholder="Describe the mission, technical stack, or collaboration details..." required></textarea>
+              </div>
+
+              <button type="submit" class="comic-btn btn-gold w-full" id="btn-submit-form">
+                <span>DISPATCH TRANSMISSION</span>
+                <span>⚡</span>
+              </button>
+
+              <div id="contact-status-box" role="status" aria-live="polite"></div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================================
+       CLASSIFIED MISSION CASE FILE MODAL DIALOG
+       ========================================================================= -->
+  <div class="case-file-modal-backdrop" id="case-file-modal" role="dialog" aria-modal="true" aria-labelledby="modal-case-title">
+    <div class="case-file-modal-box">
+      <button class="modal-close-btn" id="modal-close-btn" aria-label="Close Classified Mission Dossier">✕</button>
+      <div id="modal-classified-content">
+        <!-- Rendered via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       FOOTER
+       ========================================================================= -->
+  <footer class="comic-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-stamp">
+        STASH LOPES • THE DEVELOPER COMIC • VOL 1
+      </div>
+      <p class="footer-credits">
+        Crafted with authentic engineering datasets from <a href="https://github.com/stashlop" target="_blank" rel="noopener noreferrer" style="color: var(--comic-gold); text-decoration: underline;">github.com/stashlop</a>. All rights reserved.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/sound-effects.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/animations.js"></script>
+</body>
+</html>

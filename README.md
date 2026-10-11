@@ -1,46 +1,44 @@
-# 🦸 The Developer Comic — Stash Lopes Portfolio
+# Stash Lopes — Portfolio
 
-> *“Turning ideas into things that actually work.”*
+> Full-Stack Developer & UI/UX Designer · Mumbai, India
 
-An interactive superhero comic book & cyberpunk developer portfolio website built for **Stash Lopes** (`stashlop`), showcasing real engineering projects, verified skills, live GitHub telemetry, and 3D graphic novel visual effects.
-
----
-
-## ⚡ Featured Missions (Projects)
-- **🔥 MISSION #000: BIDWARS (Main Focus)** — Real-Time Competitive Auction & Bidding Matrix with WebSockets, Redis, and anti-sniping game theory. ([Repository](https://github.com/stashlop/bidwars.git))
-- **MISSION #001: KARIGAR** — AI-Powered Artisan Marketplace with Google Cloud Vertex AI, Gemini, TTS, Firestore & Maps. ([Repository](https://github.com/stashlop/Karigar))
-- **MISSION #002: PROJECT DRISHTI** — Computer Vision Safety Matrix with YOLOv8, FaceNet & Firebase Realtime DB.
-- **MISSION #003: ITIHAAS** — Heritage Tourism Platform for Colloquium 2025 with spaCy NLP chatbot & SQLite. ([Repository](https://github.com/stashlop/Itihaas))
-- **MISSION #004: ARCHIVE & ARCADE** — Full-stack retro gaming archive & cafe slot booking. ([Repository](https://github.com/stashlop/Archive-Arcade-mini-project))
-- **MISSION #005: JARVIS-MLX** — Local offline AI assistant for Apple Silicon MLX. ([Repository](https://github.com/stashlop/jarvis-mlx))
-- **MISSION #006: STASH PIPELINE** — Declarative Jenkins CI/CD automation & Docker suites. ([Repository](https://github.com/stashlop/jenkins-pipeline-tutorial))
+A hand-made scrapbook portfolio for **Stash Lopes** (`stashlop`). The visual style follows the
+*Spider-Man: Far From Home* end-title sequence: torn notebook paper, red-and-gold marker lettering,
+magazine-scrap collage, masking tape, sticky notes, polaroids and ballpoint doodles.
 
 ---
 
-## 🏢 Professional Experience & Guild
-- **Software Development Intern**: [Volt-Amp Logic Controls Pvt. Ltd.](http://www.valcon.co.in) *(6 Months: Jan 2026 – Aug 2026)* — Intelligent industrial instrumentation logic and software systems.
-- **Developer Collective**: Co-founder & operative at [CodedbyAKSA](https://github.com/CodedbyAKSA).
-- **LinkedIn**: [Stash Lopes on LinkedIn](https://www.linkedin.com/in/stash-lopes-176068333/)
+## Internships & experience
+- **UI/UX & Full-Stack Design Intern — Horizon View** *(2026 – Present)* — Figma websites and product UI for international clients (USA, UAE and more), from research and wireframes to developer-ready handoff.
+- **Software Development Intern — Voltic Amp Technologies** *(Mar 2025 – Oct 2025, Mumbai, 8 months)* — built and maintained production web apps across front-end and back-end.
+- **UI/UX Designer — VEARME** *(2025, Remote)* — interfaces, interaction flows and prototypes.
 
----
+## Projects
+- **HeroBid** — real-time multiplayer auction & battle arena (Flutter · Node/TS · Firebase)
+- **CyberQore** — retrieval-grounded SOC copilot (Python · TypeScript · multi-agent AI)
+- **Karigar** — GenAI marketplace assistant for Indian artisans (Gemini · Vertex AI · Cloud Run) · [repo](https://github.com/stashlop/Karigar)
+- **ExamGEN** — automated exam-paper generator (Next.js · FastAPI · Prisma)
+- **VendorConnect** — sourcing platform for street-food vendors (Flask · Render)
+- **Itihaas** — heritage-tourism platform, 1st Place Colloquium 2025 · [repo](https://github.com/stashlop/Itihaas)
+- **Project Drishti**, **Archive & Arcade**, **Jarvis-MLX**, **Stash Pipeline**
 
-## 🚀 Features & Tech
-- **Original Comic Design System**: Halftone dot overlays, ink drop shadows, speech balloons, and collectible ability cards.
-- **Interactive 3D Tilt & Holographic Foil**: Real-time perspective tracking and holographic sheen on hover.
-- **Web Audio API Synthesizer**: Zero-latency synthesized comic sound effects (*POP!*, *ZAP!*, *COMPILE!*, *WHOOSH!*).
-- **Interactive Command Center CLI**: Live bash terminal supporting `whoami`, `current`, `skills`, `missions`, `aksa`, `experience`, `sudo hire stash`.
-- **Live GitHub Sync**: Real-time repository counts and language telemetry directly from GitHub REST API.
+## Features
+- Torn paper edges generated per element (`clip-path`), ransom-note section labels and "pasted-in" scroll reveals (`js/animations.js`).
+- Stop-motion "boil" wobble on marker lettering via SVG turbulence filters.
+- Project notebook modal, project filters, sticky-note skills board and a ticket-stub journey.
+- Live GitHub stats and repos from the GitHub REST API (with offline fallback).
+- Little terminal (`help`, `whoami`, `internships`, `projects`, `sudo hire stash`…).
+- Postcard contact form that opens your mail app with the message filled in.
+- Optional Web Audio sound effects; respects `prefers-reduced-motion`.
 
----
+## Credits
+Project photos are from [Unsplash](https://unsplash.com) (Unsplash License). Fonts: Permanent Marker,
+Kalam, Caveat and Special Elite from Google Fonts.
 
-## 🛠️ Local Development
+## Local development
 ```bash
-# Clone the repository
 git clone https://github.com/stashlop/stashlopes.git
-
-# Serve locally
-python -m http.server 3000
-# or
-npx serve .
+cd stashlopes
+python -m http.server 3000   # or: npx serve .
 ```
-Visit `http://localhost:3000/` in your browser.
+Open `http://localhost:3000/`.

@@ -406,17 +406,42 @@
        FOOTER: end credits
        ========================================================================= -->
   <footer class="credits" role="contentinfo">
-    <div class="credits-inner">
-      <p class="credits-presents">a Stash Lopes production</p>
-      <dl class="credits-roll">
-        <div><dt>Design</dt><dd>Stash Lopes</dd></div>
-        <div><dt>Code</dt><dd>Stash Lopes</dd></div>
-        <div><dt>Project photography</dt><dd>Unsplash contributors</dd></div>
-        <div><dt>Style inspired by</dt><dd>Spider-Man: Far From Home end titles</dd></div>
-        <div><dt>Filmed on location</dt><dd>Mumbai, India</dd></div>
-      </dl>
-      <p class="to-be-continued boil">to be continued…</p>
-      <p class="credits-small">© <span id="year">2026</span> Stash Lopes · <a href="https://github.com/stashlop" target="_blank" rel="noopener noreferrer">github.com/stashlop</a></p>
+    <div class="credits-inner outro-grid">
+
+      <!-- Outro: end scene on a strip of film -->
+      <figure class="outro-film" id="outro">
+        <span class="tape tape-top" aria-hidden="true"></span>
+        <div class="film-strip">
+          <div class="outro-frame">
+            <video id="outro-video" class="outro-video" muted playsinline preload="metadata"
+                   poster="assets/video/outro-poster.jpg"
+                   aria-label="Outro clip: Stash at his desk turns around to the camera and throws a peace sign">
+              <source src="assets/video/outro.webm" type="video/webm" />
+              <source src="assets/video/outro.mp4" type="video/mp4" />
+            </video>
+            <div class="outro-endcard" aria-hidden="true">
+              <span class="outro-endcard-title boil">the end?</span>
+            </div>
+            <button type="button" class="outro-play" id="outro-play" aria-label="Play outro clip">▶</button>
+          </div>
+        </div>
+        <figcaption>end scene · take 1</figcaption>
+      </figure>
+
+      <div class="credits-text">
+        <p class="credits-presents">a Stash Lopes production</p>
+        <dl class="credits-roll">
+          <div><dt>Starring</dt><dd>Stash Lopes</dd></div>
+          <div><dt>Design</dt><dd>Stash Lopes</dd></div>
+          <div><dt>Code</dt><dd>Stash Lopes</dd></div>
+          <div><dt>Project photography</dt><dd>Unsplash contributors</dd></div>
+          <div><dt>Style inspired by</dt><dd>Spider-Man: Far From Home end titles</dd></div>
+          <div><dt>Filmed on location</dt><dd>Mumbai, India</dd></div>
+        </dl>
+        <p class="to-be-continued boil">to be continued…</p>
+        <p class="credits-small">© <span id="year">2026</span> Stash Lopes · <a href="https://github.com/stashlop" target="_blank" rel="noopener noreferrer">github.com/stashlop</a></p>
+      </div>
+
     </div>
   </footer>
 

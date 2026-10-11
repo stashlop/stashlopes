@@ -368,6 +368,7 @@ class PortfolioApp {
     this.renderJourney();
     this.setupEventListeners();
     this.setupNavHighlight();
+    this.setupOutro();
     this.updateSoundToggleUI();
 
     const year = document.getElementById("year");
@@ -765,6 +766,42 @@ class PortfolioApp {
     const muted = window.comicAudio.isMuted();
     btn.textContent = muted ? "🔇 sfx off" : "🔊 sfx on";
     btn.classList.toggle("muted", muted);
+  }
+
+  // --- Outro clip: plays once when scrolled into view, ends on a freeze-frame ---
+  setupOutro() {
+    const film = document.getElementById("outro");
+    const video = document.getElementById("outro-video");
+    const playBtn = document.getElementById("outro-play");
+    if (!film || !video || !playBtn) return;
+
+    const play = () => {
+      film.classList.remove("is-ended");
+      video.currentTime = 0;
+      const attempt = video.play();
+      if (attempt && attempt.catch) attempt.catch(() => film.classList.remove("is-playing"));
+    };
+
+    video.addEventListener("play", () => film.classList.add("is-playing"));
+    video.addEventListener("ended", () => {
+      film.classList.remove("is-playing");
+      film.classList.add("is-ended");
+      playBtn.textContent = "↺";
+      playBtn.setAttribute("aria-label", "Replay outro clip");
+    });
+    playBtn.addEventListener("click", play);
+
+    // Respect reduced motion: no autoplay, the play button stays available
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion || !("IntersectionObserver" in window)) return;
+
+    const observer = new IntersectionObserver(entries => {
+      if (entries.some(e => e.isIntersecting)) {
+        observer.disconnect();
+        play();
+      }
+    }, { threshold: 0.35 });
+    observer.observe(video);
   }
 
   // --- Highlight nav link of the section in view ---

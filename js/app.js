@@ -1,984 +1,787 @@
 /**
- * The Developer Comic - Application Core
- * Interactive Graphic Novel Portfolio Engine for Stash Lopes
+ * Stash Lopes — Scrapbook Portfolio
+ * Content data + rendering + interactions.
  */
 
-// --- Verified Projects Dossier ---
+const GITHUB_PROFILE = "https://github.com/stashlop";
+
+// --- Internships & work experience (from résumé) ---
+const EXPERIENCE_DATA = [
+  {
+    role: "UI/UX & Full-Stack Design Intern",
+    company: "Horizon View",
+    location: "International clients",
+    dates: "2026 – Present",
+    stampTop: "SINCE",
+    stampMain: "2026",
+    current: true,
+    bullets: [
+      "Design websites and product interfaces in Figma for international clients across the USA, UAE and other markets.",
+      "Take client briefs from research and wireframes to high-fidelity UI and interactive prototypes.",
+      "Deliver for healthcare, luxury car-rental, marketing-agency and creative-portfolio brands, adapting each to its audience.",
+      "Hand off developer-ready designs, using full-stack experience to keep them practical to build."
+    ],
+    tags: ["Figma", "Wireframing", "Prototyping", "Design handoff", "Client work"]
+  },
+  {
+    role: "Software Development Intern",
+    company: "Voltic Amp Technologies",
+    location: "Mumbai · 8 months",
+    dates: "Mar 2025 – Oct 2025",
+    stampTop: "MAR – OCT",
+    stampMain: "2025",
+    current: false,
+    bullets: [
+      "Built and maintained production web applications across front-end and back-end.",
+      "Designed, tested and implemented features against real product requirements with the team.",
+      "Improved UI responsiveness and usability; contributed to debugging and performance work."
+    ],
+    tags: ["Full-stack", "Production apps", "Testing", "Performance"]
+  },
+  {
+    role: "UI/UX Designer",
+    company: "VEARME",
+    location: "Remote",
+    dates: "2025",
+    stampTop: "REMOTE",
+    stampMain: "2025",
+    current: false,
+    bullets: [
+      "Designed interfaces, interaction flows and prototypes that guided front-end implementation."
+    ],
+    tags: ["Interaction design", "Prototypes", "UI"]
+  }
+];
+
+// --- Projects (photos: Unsplash) ---
 const PROJECTS_DATA = [
   {
-    id: "bidwars",
-    missionNo: "MISSION #000 • CURRENT WORK",
-    title: "BIDWARS",
-    subtitle: "Real-Time Competitive Auction & Bidding Matrix",
+    id: "herobid",
+    title: "HeroBid",
+    subtitle: "Real-time multiplayer auction & battle arena",
     category: "web",
-    badge: "🔥 CURRENT MAIN FOCUS • REAL-TIME WEBSOCKETS",
-    tagline: "High-intensity real-time competitive bidding battlefield where microsecond latency, anti-sniping game theory, and live auctions collide.",
-    coverImage: "assets/images/final-boss.jpg",
-    stats: { stars: "ACTIVE", techCount: "7+", clearance: "TOP SECRET // ACTIVE OP" },
-    techStack: ["Python", "Node.js", "WebSockets", "Redis", "Real-Time Bidding", "REST APIs", "Modern Glass UI"],
-    githubUrl: "https://github.com/stashlop/bidwars.git",
-    liveDemoUrl: "https://github.com/stashlop/bidwars.git",
-    classifiedFile: {
-      dateCodename: "OP-BIDWARS-2026",
-      status: "🔥 IN ACTIVE DEVELOPMENT (MAIN FOCUS)",
-      problem: "Traditional auction systems suffer from high network latency, unfair bid sniping in closing seconds, and concurrency bottlenecks when hundreds of operatives bid simultaneously.",
-      solution: "Architecting BidWars — an ultra-low-latency real-time competitive bidding battleground. Powered by high-speed WebSocket state synchronization, atomic distributed locking to prevent race conditions, and dynamic anti-sniping extension clocks.",
+    featured: true,
+    badge: "currently building",
+    badgeNow: true,
+    caption: "HeroBid",
+    image: "assets/images/projects/herobid.jpg",
+    imageAlt: "Spider-Man action figure against a dark background",
+    blurb: "Bid on a 110-hero roster, build 5-hero squads and fight in a deterministic battle engine — with anti-snipe bidding and ELO matchmaking.",
+    stack: ["Flutter", "Node.js", "TypeScript", "Firebase", "AR/VR"],
+    githubUrl: GITHUB_PROFILE,
+    liveUrl: null,
+    notes: {
+      status: "In active development",
+      overview: "A real-time multiplayer auction and battle arena. Players bid against each other for heroes from a 110-hero roster, assemble 5-hero squads, then send them into a deterministic, server-authoritative battle engine.",
       features: [
-        "⚡ Sub-Millisecond Bid Broadcasting: Instant bidirectional WebSocket event dispatch across active participants.",
-        "⏱️ Anti-Sniping Dynamic Clock: Intelligent timer auto-extension when bids land in the final seconds.",
-        "🔒 Atomic Concurrency Locking: In-memory distributed locking preventing phantom bids and race conditions.",
-        "📊 Live Market Telemetry: Real-time price velocity tracking, bidder leaderboards, and auction heatmaps.",
-        "🎮 Game-Theoretic Auction Rooms: Multi-tier competitive rooms with reserve pricing and bidder scorecards."
+        "Server-authoritative real-time bidding with anti-snipe timer extensions.",
+        "110-hero roster and 5-hero squad building.",
+        "Deterministic battle engine so every client sees the same fight.",
+        "ELO-based matchmaking.",
+        "AR/VR hero viewing."
       ],
-      architecture: "Reactive Web Front ➔ Low-Latency WebSocket Engine ➔ Redis In-Memory State & Pub/Sub ➔ Atomic Bid Validator ➔ Persistent Relational Store.",
-      challenges: "Eliminating microsecond race conditions during simultaneous bid bursts while maintaining 60fps UI sync across all active client viewports.",
-      learned: "Mastering real-time WebSocket state machines, distributed atomic operations, event-driven scalability, and high-frequency UI updates."
+      architecture: "Flutter client ➔ Node/TypeScript game server (authoritative state) ➔ Firebase"
+    }
+  },
+  {
+    id: "cyberqore",
+    title: "CyberQore",
+    subtitle: "Retrieval-grounded SOC copilot",
+    category: "ai",
+    badge: "multi-agent AI",
+    caption: "CyberQore",
+    image: "assets/images/projects/cyberqore.jpg",
+    imageAlt: "Glowing blue circuit-board pattern",
+    blurb: "Turns raw security alerts into cited, explainable investigations with trust scoring.",
+    stack: ["Python", "TypeScript", "Multi-Agent AI", "RAG", "LLMs"],
+    githubUrl: GITHUB_PROFILE,
+    liveUrl: null,
+    notes: {
+      status: "Built",
+      overview: "A security-operations copilot that takes raw alerts and produces investigations an analyst can actually trust: every conclusion is grounded in retrieved evidence, cited, and scored.",
+      features: [
+        "Multi-agent pipeline that triages, investigates and summarises alerts.",
+        "Retrieval-grounded answers with citations back to source evidence.",
+        "Trust scoring so analysts know how much weight to give each finding.",
+        "Explainable output instead of a black-box verdict."
+      ],
+      architecture: "Alert ingest ➔ agent orchestration (Python) ➔ retrieval over evidence ➔ cited investigation + trust score ➔ TypeScript UI"
     }
   },
   {
     id: "karigar",
-    missionNo: "MISSION #001",
-    title: "KARIGAR",
-    subtitle: "AI-Powered Artisan Marketplace",
+    title: "Karigar",
+    subtitle: "GenAI marketplace assistant for Indian artisans",
     category: "ai",
-    badge: "GOOGLE VERTEX AI • CLOUD RUN",
-    tagline: "Bridging centuries of Indian artisanal heritage with generative AI storytelling and geospatial intelligence.",
-    coverImage: "assets/images/mission-karigar.jpg",
-    stats: { stars: 8, techCount: "8+", clearance: "TOP SECRET" },
-    techStack: ["Python", "Flask", "Vertex AI", "Gemini API", "Cloud Text-to-Speech", "Cloud Firestore", "Google Maps API", "Docker"],
+    badge: "Google GenAI Exchange",
+    caption: "Karigar",
+    image: "assets/images/projects/karigar.jpg",
+    imageAlt: "Handmade ceramic cups on a shelf",
+    blurb: "AI product storytelling, multilingual voice narration and an interactive heritage map for artisans.",
+    stack: ["Gemini", "Vertex AI", "Cloud Run", "Python", "Flask", "Firestore", "Maps API"],
     githubUrl: "https://github.com/stashlop/Karigar",
-    liveDemoUrl: "https://karigar-7ngk.onrender.com",
-    classifiedFile: {
-      dateCodename: "OP-ARTISAN-2025",
-      status: "DEPLOYED & OPERATIONAL",
-      problem: "Traditional Indian artisans struggle with digital discovery, English-dominant marketplaces, and lack tools to craft compelling narrative marketing that honors their generational heritage.",
-      solution: "Engineered Karigar, an end-to-end AI marketplace assistant. It transforms raw artisan craft photos and sketches into compelling cultural narratives, multimodal voice narrations in native Indian dialects, and pinpoints physical craft clusters via interactive map coordinates.",
+    liveUrl: "https://karigar-7ngk.onrender.com",
+    notes: {
+      status: "Deployed",
+      overview: "Built for the Google GenAI Exchange Hackathon. Karigar helps traditional Indian artisans sell online by turning photos of their craft into compelling product stories, voice narrations in their own language, and a map of craft clusters.",
       features: [
-        "Multimodal AI Storytelling: Generates cultural provenance and social captions using Google Cloud Vertex AI & Gemini.",
-        "Voice Story Creation: Text-to-Speech synthesis converting stories into localized audio narratives.",
-        "Geospatial Discovery: Interactive Google Maps integration mapping artisan hubs across regions.",
-        "Design Enhancement Engine: Computer vision analysis suggesting contemporary adaptations while preserving traditional motifs.",
-        "Automated Video Scripting: Generates storyboarded scripts optimized for social engagement."
+        "AI product storytelling with Gemini on Vertex AI.",
+        "Multilingual voice narration with Cloud Text-to-Speech.",
+        "Interactive heritage map of artisan hubs.",
+        "Containerised and deployed on Cloud Run."
       ],
-      architecture: "Flask Microservice Core ➔ Google Vertex AI / Gemini API ➔ Cloud Text-to-Speech ➔ Google Maps JS API ➔ Cloud Firestore NoSQL Database ➔ Containerized on Docker.",
-      challenges: "Preserving authentic vernacular tone across diverse Indian dialects while maintaining sub-second inference response times for voice synthesis.",
-      learned: "Mastered prompt engineering for cultural authenticity, Vertex AI integration, Firestore data structuring, and geospatial indexing."
+      architecture: "Flask ➔ Vertex AI / Gemini ➔ Cloud Text-to-Speech ➔ Google Maps ➔ Firestore ➔ Cloud Run"
     }
   },
   {
-    id: "drishti",
-    missionNo: "MISSION #002",
-    title: "PROJECT DRISHTI",
-    subtitle: "AI Safety & Alert Matrix",
-    category: "ai",
-    badge: "COMPUTER VISION • REALTIME IoT",
-    tagline: "Autonomous multi-hazard computer vision matrix for hazard identification, facial recognition, and instant emergency dispatch.",
-    coverImage: "assets/images/mission-drishti.jpg",
-    stats: { stars: 6, techCount: "6+", clearance: "CONFIDENTIAL" },
-    techStack: ["Python", "OpenCV", "YOLOv8", "TensorFlow", "Firebase Realtime DB", "Google Maps API", "Flask"],
-    githubUrl: "https://github.com/stashlop",
-    liveDemoUrl: "https://github.com/stashlop",
-    classifiedFile: {
-      dateCodename: "OP-SURVEIL-AI",
-      status: "PROTOTYPED & VALIDATED",
-      problem: "Conventional surveillance systems rely on passive human monitoring, causing fatal delays during rapid fire breakouts, unauthorized perimeter breach, or missing person search.",
-      solution: "Developed Project Drishti, an automated edge computer vision matrix combining dual-stream thermal/optical hazard detection (fire/smoke), facial verification, and automated geolocation dispatch to a centralized Firebase monitoring command center.",
+    id: "examgen",
+    title: "ExamGEN",
+    subtitle: "Automated exam-paper generator",
+    category: "web",
+    badge: "ML classification",
+    caption: "ExamGEN",
+    image: "assets/images/projects/examgen.jpg",
+    imageAlt: "Student writing on paper with a pen",
+    blurb: "Admin & teacher dashboards, a question bank and ML question classification to build papers automatically.",
+    stack: ["Next.js", "FastAPI", "Prisma", "Python", "ML"],
+    githubUrl: GITHUB_PROFILE,
+    liveUrl: null,
+    notes: {
+      status: "Built",
+      overview: "Setting exam papers by hand is slow and inconsistent. ExamGEN keeps a structured question bank, classifies questions with ML, and generates balanced papers on demand.",
       features: [
-        "Real-Time Smoke & Fire Detection: YOLOv8 deep learning vision models trained on industrial fire datasets.",
-        "Facial Recognition Vectoring: 128-d face embedding matching for authorized vs unauthorized personnel.",
-        "GPS Incident Geofencing: Immediate coordinates stamping on alert trigger.",
-        "Real-Time Firebase Dashboard: Sub-second synchronized alert broadcasts with live camera telemetry.",
-        "Automated Incident Logging: Historical incident forensics with automated snapshot capture."
+        "Admin and teacher dashboards.",
+        "Central question bank.",
+        "ML-based question classification.",
+        "Automated paper generation."
       ],
-      architecture: "Edge Camera Stream ➔ OpenCV Video Pipeline ➔ YOLOv8 Hazard Inference + FaceNet Verification ➔ Firebase Realtime Cloud Synchronization ➔ Web Ops Dashboard.",
-      challenges: "Minimizing false positives caused by sudden lighting shifts and reflective surfaces in real-world ambient conditions.",
-      learned: "Optimized frame-skipping inference pipelines for low-latency edge deployment and real-time state synchronization."
+      architecture: "Next.js dashboards ➔ FastAPI service ➔ Prisma ORM ➔ database; ML classifier in Python"
+    }
+  },
+  {
+    id: "vendorconnect",
+    title: "VendorConnect",
+    subtitle: "Sourcing platform for street-food vendors",
+    category: "web",
+    badge: "deployed on Render",
+    caption: "VendorConnect",
+    image: "assets/images/projects/vendorconnect.jpg",
+    imageAlt: "Plate of samosas with green chutney",
+    blurb: "Verified suppliers, group ordering and a multilingual voice chatbot for low-literacy users.",
+    stack: ["Flask", "Python", "Voice chatbot", "Render"],
+    githubUrl: GITHUB_PROFILE,
+    liveUrl: null,
+    notes: {
+      status: "Deployed on Render",
+      overview: "Street-food vendors often buy raw materials from unverified sources at poor prices. VendorConnect connects them with verified suppliers and lets them pool orders — with a voice-first interface so it works for low-literacy users.",
+      features: [
+        "Verified supplier directory.",
+        "Group ordering to unlock better prices.",
+        "Multilingual voice chatbot for low-literacy users."
+      ],
+      architecture: "Flask web app ➔ supplier & order data ➔ voice chatbot ➔ deployed on Render"
     }
   },
   {
     id: "itihaas",
-    missionNo: "MISSION #003",
-    title: "ITIHAAS",
-    subtitle: "Heritage Tourism & Monument Matrix",
+    title: "Itihaas",
+    subtitle: "Heritage-tourism platform",
     category: "web",
-    badge: "NLP CHATBOT • MONUMENT BOOKING",
-    tagline: "Next-gen heritage tourism platform built for Colloquium 2025, unifying UNESCO site bookings, certified guides, and NLP travel assistance.",
-    coverImage: "assets/images/mission-itihaas.jpg",
-    stats: { stars: 8, techCount: "7+", clearance: "UNCLASSIFIED" },
-    techStack: ["Python", "Flask", "SQLite", "SQLAlchemy", "spaCy NLP", "Flask-Login", "Google Maps API", "Flask-Mail"],
+    badge: "🏆 1st place · Colloquium 2025",
+    caption: "Itihaas",
+    image: "assets/images/projects/itihaas.jpg",
+    imageAlt: "The Taj Mahal framed by a carved archway",
+    blurb: "Monument slot booking, certified guides and an NLP travel assistant — won 1st place at Colloquium 2025.",
+    stack: ["Python", "Flask", "SQLite", "SQLAlchemy", "spaCy", "Maps API"],
     githubUrl: "https://github.com/stashlop/Itihaas",
-    liveDemoUrl: "https://github.com/stashlop/Itihaas",
-    classifiedFile: {
-      dateCodename: "OP-COLLOQUIUM-2025",
-      status: "FEATURED AT COLLOQUIUM 2025",
-      problem: "Tourists visiting Indian historical monuments face fragmented ticketing platforms, unverified guides, and a lack of contextual cultural education on site.",
-      solution: "Constructed Itihaas as an all-in-one heritage platform featuring monument slot bookings, certified local guide booking, an NLP chatbot powered by spaCy, an integrated cultural merchandise marketplace, and automated WhatsApp/Email confirmations.",
+    liveUrl: null,
+    notes: {
+      status: "1st Place — Colloquium 2025",
+      overview: "Tourists visiting Indian monuments deal with fragmented ticketing, unverified guides and little on-site context. Itihaas puts bookings, guides and a cultural assistant in one place.",
       features: [
-        "UNESCO Monument Ticketing: Slot-based capacity reservation system for historic sites.",
-        "Intelligent Guide Dispatch: Certified local guide directory with customer review verification.",
-        "spaCy NLP Assistant: Context-aware chatbot for monument history, etiquette, and travel tips.",
-        "Loyalty Rewards Engine (Itihaas Coins): Gamified points for visits, reviews, and cultural quiz engagement.",
-        "Omnichannel Alerts: Multi-language interface with automatic WhatsApp & SMTP email booking receipts."
+        "Slot-based monument ticketing.",
+        "Certified local guide booking with reviews.",
+        "spaCy NLP chatbot for history, etiquette and travel tips.",
+        "Itihaas Coins loyalty rewards.",
+        "WhatsApp & email booking confirmations."
       ],
-      architecture: "Flask Application Layer ➔ SQLAlchemy ORM ➔ SQLite Persistence ➔ spaCy Intent Classification ➔ Google Maps JS API ➔ Jinja2 Reactive UI.",
-      challenges: "Designing an extensible relational schema that effortlessly connects Users, Monuments, Guide Schedules, Merchandise Orders, and Review matrices.",
-      learned: "Deepened expertise in Flask architecture, role-based auth (Flask-Login), transactional database consistency, and NLP intent processing."
+      architecture: "Flask ➔ SQLAlchemy ➔ SQLite ➔ spaCy intent classification ➔ Google Maps ➔ Jinja2 UI"
+    }
+  },
+  {
+    id: "drishti",
+    title: "Project Drishti",
+    subtitle: "Computer-vision safety & alert system",
+    category: "ai",
+    badge: "computer vision",
+    caption: "Drishti",
+    image: "assets/images/projects/drishti.jpg",
+    imageAlt: "Grid of CCTV security cameras on a wall",
+    blurb: "Fire & smoke detection, face verification and instant geo-tagged alerts to a live dashboard.",
+    stack: ["Python", "OpenCV", "YOLOv8", "TensorFlow", "Firebase", "Flask"],
+    githubUrl: GITHUB_PROFILE,
+    liveUrl: null,
+    notes: {
+      status: "Prototyped",
+      overview: "Passive CCTV relies on someone watching the screen. Drishti watches for hazards automatically and pushes geo-tagged alerts to a central dashboard the moment something happens.",
+      features: [
+        "YOLOv8 fire & smoke detection.",
+        "Face verification for authorised vs unknown people.",
+        "GPS-stamped incident alerts.",
+        "Real-time Firebase dashboard with snapshots."
+      ],
+      architecture: "Camera stream ➔ OpenCV ➔ YOLOv8 + face embeddings ➔ Firebase Realtime DB ➔ web dashboard"
     }
   },
   {
     id: "arcade",
-    missionNo: "MISSION #004",
-    title: "ARCHIVE & ARCADE",
-    subtitle: "Digital Archive & Retro Gaming Platform",
+    title: "Archive & Arcade",
+    subtitle: "Digital archive & retro-gaming café platform",
     category: "web",
-    badge: "FULL-STACK JS • COMMERCE ENGINE",
-    tagline: "End-to-end digital arcade and archive platform uniting vintage book/game rentals, cafe slot reservation, and admin revenue telemetry.",
-    coverImage: "assets/images/mission-arcade.jpg",
-    stats: { stars: 5, techCount: "6+", clearance: "DECLASSIFIED" },
-    techStack: ["Node.js", "Express", "JavaScript", "Nunjucks", "Glassmorphism CSS", "Session Auth", "REST APIs"],
+    badge: "live on Vercel",
+    caption: "Archive & Arcade",
+    image: "assets/images/projects/arcade.jpg",
+    imageAlt: "Neon-lit arcade with rows of game machines",
+    blurb: "Book & game rentals, café slot booking with conflict checks and an admin revenue dashboard.",
+    stack: ["Node.js", "Express", "JavaScript", "Nunjucks", "REST APIs"],
     githubUrl: "https://github.com/stashlop/Archive-Arcade-mini-project",
-    liveDemoUrl: "https://archive-arcade-mini-project.vercel.app",
-    classifiedFile: {
-      dateCodename: "OP-RETRO-ARCADE",
-      status: "LIVE ON PRODUCTION",
-      problem: "Modern entertainment venues need a unified online experience blending digital archive lending, game commerce, on-premise cafe table booking, and real-time revenue analytics.",
-      solution: "Architected Archive & Arcade with Express.js and dynamic templating, offering books/games buy-and-rent workflows, session-based cart/checkout, slot-based cafe scheduling with collision detection, and an executive revenue dashboard with CSV export.",
+    liveUrl: "https://archive-arcade-mini-project.vercel.app",
+    notes: {
+      status: "Live",
+      overview: "A full-stack site for a book-and-games café: browse and rent from the archive, buy games, reserve café tables, and give admins a revenue dashboard.",
       features: [
-        "Curated Archive & Game Hub: Multi-tag search and filter with instant rental/purchase toggles.",
-        "Interactive Cafe Booking: Capacity-aware slot reservations with weekend/member availability rules.",
-        "Dynamic Glass UI: Atmospheric cyber-arcade styling with responsive background media.",
-        "Executive Revenue Command: Real-time revenue breakdown by payment method, daily trend charts, and CSV telemetry export.",
-        "Community & Member Hub: Email-based community onboarding with role-based administrative broadcast system."
+        "Searchable archive with rent / buy flows.",
+        "Café slot booking with collision detection.",
+        "Session-based cart and checkout.",
+        "Admin revenue dashboard with CSV export."
       ],
-      architecture: "Node.js runtime ➔ Express 4 routing ➔ express-session Auth ➔ Nunjucks template engine ➔ Custom JSON persistence ➔ Vercel & Render hosting.",
-      challenges: "Implementing robust booking conflict checks for time slots while maintaining lightning-fast rendering without client-heavy frameworks.",
-      learned: "Refined end-to-end Node.js architecture, server-side template optimization, session lifecycle management, and administrative data aggregation."
+      architecture: "Node.js ➔ Express ➔ express-session ➔ Nunjucks templates ➔ JSON persistence ➔ Vercel"
     }
   },
   {
     id: "jarvis",
-    missionNo: "MISSION #005",
-    title: "JARVIS-MLX",
-    subtitle: "Apple Silicon Offline AI Engine",
+    title: "Jarvis-MLX",
+    subtitle: "Offline AI assistant on Apple Silicon",
     category: "ai",
-    badge: "LOCAL LLM • APPLE SILICON MLX",
-    tagline: "Stark-level local productivity intelligence running 100% offline using state-of-the-art quantized LLMs accelerated on Apple Silicon.",
-    coverImage: "assets/images/hero-avatar.jpg",
-    stats: { stars: 1, techCount: "4+", clearance: "EXPERIMENTAL" },
-    techStack: ["Python", "Apple MLX", "Local LLMs", "Quantization", "Shell Automation"],
+    badge: "local LLM",
+    caption: "Jarvis-MLX",
+    image: "assets/images/projects/jarvis.jpg",
+    imageAlt: "MacBook lit with purple light",
+    blurb: "A private, fully offline assistant running quantised models with Apple MLX.",
+    stack: ["Python", "Apple MLX", "Local LLMs", "Quantization"],
     githubUrl: "https://github.com/stashlop/jarvis-mlx",
-    liveDemoUrl: "https://github.com/stashlop/jarvis-mlx",
-    classifiedFile: {
-      dateCodename: "OP-OFFLINE-JARVIS",
-      status: "ACTIVE EXPERIMENTAL",
-      problem: "Cloud-hosted AI assistants introduce latency, require constant internet connectivity, and pose privacy risks for proprietary codebases and sensitive data.",
-      solution: "Configured and optimized an offline AI productivity suite leveraging Apple MLX framework to execute state-of-the-art language and vision models directly on Unified Memory architecture.",
+    liveUrl: null,
+    notes: {
+      status: "Experimental",
+      overview: "Cloud assistants need a connection and see your data. Jarvis-MLX runs quantised language models locally on Apple Silicon so everything stays on the machine.",
       features: [
-        "Zero-Cloud Architecture: 100% private local execution on hardware.",
-        "Unified Memory Optimization: High-speed token generation utilizing Apple Silicon GPU cores.",
-        "System Tool Integration: Automates local developer workflows and file processing.",
-        "Context Management: Optimized KV cache memory footprint for long technical prompts."
+        "100% local inference.",
+        "4-bit quantised models on unified memory.",
+        "Automates local developer workflows."
       ],
-      architecture: "Apple MLX Framework ➔ 4-bit Quantized Weight Pipeline ➔ Unified Memory Bus ➔ Python CLI / Socket Interface.",
-      challenges: "Balancing memory bandwidth constraints against inference quality on localized laptop silicon.",
-      learned: "Mastered local model deployment, model quantization techniques, and Apple Silicon machine learning optimizations."
+      architecture: "Apple MLX ➔ quantised weights ➔ unified memory ➔ Python CLI"
     }
   },
   {
     id: "pipeline",
-    missionNo: "MISSION #006",
-    title: "STASH PIPELINE & CLOUD OPS",
-    subtitle: "Automated CI/CD Deployment Matrix",
+    title: "Stash Pipeline",
+    subtitle: "CI/CD automation with Jenkins & Docker",
     category: "cloud",
-    badge: "JENKINS • DOCKER • CI/CD",
-    tagline: "Declarative CI/CD build, test, and containerized deployment pipelines with webhook automation and Maven lifecycle verification.",
-    coverImage: "assets/images/final-boss.jpg",
-    stats: { stars: 3, techCount: "5+", clearance: "OPERATIONAL" },
-    techStack: ["Jenkins", "Docker", "Bash / Shell", "Maven", "Git", "Linux"],
+    badge: "devops",
+    caption: "Stash Pipeline",
+    image: "assets/images/projects/pipeline.jpg",
+    imageAlt: "Server rack with network cables",
+    blurb: "Declarative Jenkins pipelines that build, test and ship Docker images on every push.",
+    stack: ["Jenkins", "Docker", "Bash", "Maven", "Git", "Linux"],
     githubUrl: "https://github.com/stashlop/jenkins-pipeline-tutorial",
-    liveDemoUrl: "https://github.com/stashlop/stashpipeline",
-    classifiedFile: {
-      dateCodename: "OP-DEVOPS-CICD",
-      status: "PRODUCTION PIPELINE",
-      problem: "Manual application testing and deployment creates bottlenecks, inconsistency across staging environments, and high rollback overhead.",
-      solution: "Constructed automated Jenkins declarative pipelines integrating source control triggers, automated unit testing via Maven, Docker image builds, and automated push to registry.",
+    liveUrl: null,
+    notes: {
+      status: "Working pipeline",
+      overview: "Manual build-and-deploy is slow and error-prone. These pipelines run the whole cycle automatically from a GitHub webhook.",
       features: [
-        "Declarative Jenkinsfiles: Multi-stage pipeline automation for clean build, test, and deploy cycles.",
-        "Containerized Execution: Isolated Docker containers for reproducible artifact generation.",
-        "Automated Test Gates: Build abort triggers upon test failure or lint errors.",
-        "Shell Automation Scripts: Custom bash orchestration scripts for staging environment provisioning."
+        "Multi-stage declarative Jenkinsfiles.",
+        "Containerised, reproducible builds.",
+        "Test gates that stop bad builds.",
+        "Shell scripts for environment setup."
       ],
-      architecture: "GitHub Webhook Trigger ➔ Jenkins Orchestrator Agent ➔ Maven Build & Unit Test Stage ➔ Docker Build & Push ➔ Cloud Host Deployment.",
-      challenges: "Managing pipeline credentials securely and structuring idempotent containerized build steps.",
-      learned: "Deep practical understanding of DevOps automation, container lifecycle, and continuous deployment best practices."
+      architecture: "GitHub webhook ➔ Jenkins ➔ Maven build & test ➔ Docker build & push ➔ deploy"
     }
   }
 ];
 
-// --- Verified Skills Arsenal ---
+// --- Skills (from résumé) ---
 const SKILLS_DATA = [
-  // Languages
-  { name: "Python", category: "languages", icon: "🐍", level: 95, rank: "SSR • S-TIER", desc: "Core language for AI/ML, Flask web services, OpenCV, and automation scripts.", badge: "PRIMARY WEAPON" },
-  { name: "JavaScript / ES6+", category: "languages", icon: "⚡", level: 92, rank: "SR • A-TIER", desc: "Modern full-stack JavaScript, asynchronous event loops, DOM mechanics, and Node APIs.", badge: "FRONT & BACK" },
-  { name: "TypeScript", category: "languages", icon: "🔷", level: 85, rank: "SR • A-TIER", desc: "Static typing, interfaces, generic data structures, and type-safe web applications.", badge: "TYPE SHIELD" },
-  { name: "Java & Maven", category: "languages", icon: "☕", level: 82, rank: "R • B-TIER", desc: "Object-oriented software engineering, Maven lifecycle builds, and enterprise patterns.", badge: "OOP ROBUST" },
-  { name: "Dart", category: "languages", icon: "🎯", level: 80, rank: "R • B-TIER", desc: "Mobile application architecture and structured reactive interfaces.", badge: "CROSS-PLATFORM" },
-  { name: "SQL & Schema", category: "languages", icon: "🗄️", level: 88, rank: "SR • A-TIER", desc: "Relational modeling, Star Schema data warehousing, indexing, and SQLAlchemy ORM.", badge: "DATA MASTER" },
-  { name: "HTML5 / CSS3 / SCSS", category: "languages", icon: "🎨", level: 94, rank: "SSR • S-TIER", desc: "Semantic markup, Glassmorphism, CSS Grid, procedural shaders, and responsive UI.", badge: "VISUAL SUITE" },
-  { name: "Bash & Shell", category: "languages", icon: "💻", level: 86, rank: "SR • A-TIER", desc: "Linux shell scripting, environment configuration, server automation, and POSIX tooling.", badge: "TERMINAL ACE" },
-
-  // AI / ML
-  { name: "Google Cloud Vertex AI", category: "ai", icon: "🧠", level: 94, rank: "SSR • S-TIER", desc: "Multimodal Gemini integration, prompt optimization, embeddings, and generative AI.", badge: "AI CORE" },
-  { name: "Gemini API", category: "ai", icon: "✨", level: 95, rank: "SSR • S-TIER", desc: "Generative storytelling, structured JSON outputs, and conversational context systems.", badge: "GEN-AI SPECIALIST" },
-  { name: "OpenCV & YOLOv8", category: "ai", icon: "👁️", level: 90, rank: "SR • A-TIER", desc: "Real-time object detection, hazard tracking, bounding boxes, and video stream processing.", badge: "VISION MATRIX" },
-  { name: "spaCy NLP", category: "ai", icon: "💬", level: 88, rank: "SR • A-TIER", desc: "Tokenization, named entity recognition (NER), and domain-specific intent classification.", badge: "NLP AGENT" },
-  { name: "Apple MLX & Local LLMs", category: "ai", icon: "🍎", level: 84, rank: "SR • A-TIER", desc: "Quantized local inference on Unified Memory, Apple Silicon acceleration, and private AI.", badge: "OFFLINE BRAIN" },
-  { name: "Cloud Text-to-Speech", category: "ai", icon: "🎙️", level: 88, rank: "SR • A-TIER", desc: "Multilingual voice synthesis, voice tuning, and localized audio generation.", badge: "VOICE SYSTEM" },
-
-  // Web
-  { name: "Flask & Jinja2", category: "web", icon: "🌶️", level: 95, rank: "SSR • S-TIER", desc: "Production Python microservices, SQLAlchemy ORM, Flask-Login, and template engines.", badge: "BACKEND STRIKER" },
-  { name: "Node.js & Express", category: "web", icon: "🟢", level: 90, rank: "SR • A-TIER", desc: "Scalable REST APIs, session authentication, middleware pipelines, and microservices.", badge: "API ENGINE" },
-  { name: "React & Next.js", category: "web", icon: "⚛️", level: 86, rank: "SR • A-TIER", desc: "Component architecture, hooks, state management, and modern reactive frontends.", badge: "UI FRAMEWORK" },
-  { name: "REST APIs & JSON Store", category: "web", icon: "🔌", level: 92, rank: "SSR • S-TIER", desc: "Robust API contracts, webhook listeners, endpoint security, and persistent stores.", badge: "CONNECTIVITY" },
-
-  // Cloud / DevOps
-  { name: "Google Cloud Platform", category: "cloud", icon: "☁️", level: 90, rank: "SR • A-TIER", desc: "Cloud Firestore, Cloud Run, Vertex AI suites, Google Maps Platform, and Cloud IAM.", badge: "CLOUD FORGE" },
-  { name: "Docker Containerization", category: "cloud", icon: "🐳", level: 88, rank: "SR • A-TIER", desc: "Multi-stage Dockerfiles, microservice container isolation, and reproducible runtimes.", badge: "CONTAINER POD" },
-  { name: "Jenkins CI/CD", category: "cloud", icon: "⚙️", level: 85, rank: "SR • A-TIER", desc: "Declarative Jenkins pipelines, automated test runs, and continuous deployment workflows.", badge: "PIPELINE BOT" },
-  { name: "Git & GitHub Ops", category: "cloud", icon: "🐙", level: 94, rank: "SSR • S-TIER", desc: "Branching strategies, GitHub APIs, repo governance, and automated CI actions.", badge: "VERSION VAULT" },
-
-  // Creative & Tools
-  { name: "Blender 3D", category: "creative", icon: "🧊", level: 85, rank: "SR • A-TIER", desc: "3D scene composition, low-poly assets, spatial models, and rendering pipelines.", badge: "DIMENSION WARP" },
-  { name: "UI/UX & Editorial Design", category: "creative", icon: "✒️", level: 92, rank: "SSR • S-TIER", desc: "Graphic novel aesthetic layouts, typography hierarchy, design systems, and glass UI.", badge: "COMIC ARTISAN" },
-  { name: "Canva & Krita", category: "creative", icon: "🖌️", level: 88, rank: "SR • A-TIER", desc: "Digital asset illustration, banner synthesis, halftone patterning, and visual assets.", badge: "INK MASTER" }
+  { title: "Languages", emoji: "📜", color: "yellow", items: ["Python", "TypeScript", "JavaScript", "Dart", "SQL"] },
+  { title: "Front-End", emoji: "🎨", color: "pink", items: ["Next.js", "React", "Flutter", "Tailwind CSS", "shadcn/ui"] },
+  { title: "Back-End & Data", emoji: "🛠️", color: "blue", items: ["FastAPI", "Node.js", "Flask", "Firebase / Firestore", "Prisma", "REST APIs"] },
+  { title: "AI / ML", emoji: "🧠", color: "green", items: ["Multi-agent AI", "RAG", "LLM integration", "Gemini", "Vertex AI"] },
+  { title: "Design", emoji: "✏️", color: "pink", items: ["Figma", "Wireframing", "Prototyping", "Design handoff"] },
+  { title: "Tools", emoji: "🧰", color: "yellow", items: ["Git & GitHub", "Docker", "CI/CD", "Google Cloud Run"] }
 ];
 
-// --- Verified Milestone Timeline ---
-const TIMELINE_DATA = [
-  {
-    issue: "CHAPTER 01",
-    date: "2023 — 2024",
-    title: "INIT: IT Engineering Journey",
-    subtitle: "The Genesis of the Developer Hero",
-    desc: "Commenced formal IT Engineering degree with a dedication to deep-stack software development, data structures, algorithms, and exploring computational frontiers.",
-    badge: "ACADEMIC BASE",
-    icon: "🎓",
-    sound: "compile"
-  },
-  {
-    issue: "CHAPTER 02",
-    date: "2024",
-    title: "THE FIRST FORAYS: Full Stack & Systems",
-    subtitle: "Building the Foundations",
-    desc: "Authored foundational full-stack architectures: Archive & Arcade gaming archive, database management schemas, and modular web interfaces using Node.js & Flask.",
-    badge: "FOUNDATION",
-    icon: "🏗️",
-    sound: "pop"
-  },
-  {
-    issue: "CHAPTER 03",
-    date: "2025",
-    title: "COLLOQUIUM 2025: IT for Society",
-    subtitle: "Itihaas Project Launch",
-    desc: "Architected and presented 'Itihaas' at Colloquium 2025. Engineered UNESCO monument bookings, tour guide verification, and spaCy NLP assistance to preserve cultural heritage.",
-    badge: "HACKATHON / COLLOQUIUM",
-    icon: "🏆",
-    sound: "zap"
-  },
-  {
-    issue: "CHAPTER 04",
-    date: "2025 — 2026",
-    title: "AI EXPANSION: Karigar & Vertex AI",
-    subtitle: "Multimodal AI & Geospatial Systems",
-    desc: "Spearheaded Karigar, combining Google Cloud Vertex AI, Gemini, and Cloud Text-to-Speech to empower traditional artisans with generative storytelling and interactive maps.",
-    badge: "AI BREAKTHROUGH",
-    icon: "🚀",
-    sound: "compile"
-  },
-  {
-    issue: "CHAPTER 05",
-    date: "JAN 2026 — AUG 2026",
-    title: "INDUSTRY FIELDWORK: Volt-Amp Logic Controls",
-    subtitle: "Software Development Intern (6 Months)",
-    desc: "Served as Software Development Intern at Volt-Amp Logic Controls Pvt. Ltd. (Intelligent Instrumentation). Engineered production-ready software solutions, met tight industrial delivery timelines, and maintained rigorous software quality and reliability standards.",
-    badge: "🏢 6-MONTH INDUSTRY INTERNSHIP",
-    icon: "⚡",
-    sound: "compile"
-  },
-  {
-    issue: "CHAPTER 06",
-    date: "2026",
-    title: "DEVOPS & EDGE INTELLIGENCE",
-    subtitle: "CI/CD Pipelines & Local SOTA Models",
-    desc: "Engineered Jenkins declarative build pipelines (StashPipeline), containerized deployment matrices, and configured Apple MLX local inference systems for offline productivity.",
-    badge: "DEVOPS & MLX",
-    icon: "⚙️",
-    sound: "zap"
-  },
-  {
-    issue: "CHAPTER 07",
-    date: "2026 — PRESENT",
-    title: "FLAGSHIP MISSION: BIDWARS",
-    subtitle: "Real-Time Bidding & WebSocket Architecture",
-    desc: "Currently architecting BidWars (https://github.com/stashlop/bidwars.git) — an ultra-low latency real-time competitive bidding and auction battleground with microsecond state sync, anti-sniping clocks, and atomic concurrency controls.",
-    badge: "🔥 MAIN FOCUS • IN PROGRESS",
-    icon: "⚔️",
-    sound: "whoosh"
-  }
+// --- Journey ---
+const JOURNEY_DATA = [
+  { date: "2023", icon: "🎓", title: "Started B.E. in Information Technology", desc: "Joined St. Francis Institute of Technology (University of Mumbai)." },
+  { date: "2024", icon: "🏗️", title: "First full-stack builds", desc: "Shipped Archive & Arcade and started building with Node.js and Flask." },
+  { date: "MAR 2025", icon: "⚡", title: "Software Development Intern — Voltic Amp", desc: "Eight months building and maintaining production web apps in Mumbai." },
+  { date: "2025", icon: "✏️", title: "UI/UX Designer — VEARME", desc: "Remote design work: interfaces, flows and prototypes." },
+  { date: "2025", icon: "🏆", title: "1st Place, Colloquium 2025 & SFIT Hackathon win", desc: "Itihaas took first place; also won the SFIT IT Department Hackathon." },
+  { date: "2025", icon: "✨", title: "Google GenAI Exchange Hackathon", desc: "Built Karigar with Gemini, Vertex AI and Cloud Run." },
+  { date: "2026", icon: "🌍", title: "UI/UX & Full-Stack Design Intern — Horizon View", desc: "Designing for international clients in the USA, UAE and more." },
+  { date: "2026", icon: "🕸️", title: "HeroBid & CyberQore", desc: "Real-time multiplayer game systems and multi-agent AI." },
+  { date: "2027", icon: "🎓", title: "Graduation (expected)", desc: "B.E. Information Technology — next stop: wherever the work is.", future: true }
 ];
 
-// --- Comic Sound Effect Action Words Spawner ---
-const COMIC_WORDS = [
-  "BAM!", "POW!", "COMPILE!", "DEPLOY!", "PASS 100%!", "STASH.EXE!",
-  "ZAP!", "AI ONLINE!", "COMMIT!", "FIXED!", "MERGE!", "SYNC!"
-];
+const SFX_WORDS = ["THWIP!", "SHIP IT!", "DEPLOY!", "COMMIT!", "MERGED!", "NICE!", "POW!", "FIXED!"];
 
-function spawnComicActionWord(x, y, text) {
-  const container = document.getElementById("comic-sfx-layer");
-  if (!container) return;
+const ROTATIONS = [-2.5, 1.8, -1.2, 2.6, -1.8, 1.2, -2.2, 2.1];
+const rot = i => `${ROTATIONS[i % ROTATIONS.length]}deg`;
 
-  const bubble = document.createElement("div");
-  bubble.className = "comic-action-pop";
-  bubble.textContent = text || COMIC_WORDS[Math.floor(Math.random() * COMIC_WORDS.length)];
-
-  // Random rotation between -20deg and 20deg
-  const rot = Math.floor(Math.random() * 40) - 20;
-  bubble.style.left = `${x}px`;
-  bubble.style.top = `${y}px`;
-  bubble.style.setProperty("--rot", `${rot}deg`);
-
-  container.appendChild(bubble);
-
-  if (window.comicAudio) {
-    window.comicAudio.playPop();
-  }
-
-  setTimeout(() => {
-    bubble.remove();
-  }, 1100);
+function escapeHTML(str) {
+  return String(str ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
 
-// --- App State & Initialization ---
-class ComicPortfolioApp {
+function spawnSfxWord(x, y, text) {
+  const layer = document.getElementById("sfx-layer");
+  if (!layer) return;
+  const word = document.createElement("div");
+  word.className = "sfx-word";
+  word.textContent = text || SFX_WORDS[Math.floor(Math.random() * SFX_WORDS.length)];
+  word.style.left = `${x}px`;
+  word.style.top = `${y}px`;
+  word.style.setProperty("--rot", `${Math.floor(Math.random() * 30) - 15}deg`);
+  layer.appendChild(word);
+  if (window.comicAudio) window.comicAudio.playPop();
+  setTimeout(() => word.remove(), 950);
+}
+
+class PortfolioApp {
   constructor() {
-    this.activeFilter = "all";
     this.cachedRepos = [];
-    this.profileData = null;
-    this.readerMode = "scroll"; // 'scroll' | 'reader'
-    this.currentIssueIndex = 0;
-    this.issues = ["cover", "origin", "arsenal", "missions", "journey", "command-center", "contact"];
+    this.lastFocus = null;
   }
 
   async init() {
+    this.renderExperience();
+    this.renderProjects();
     this.renderSkills();
-    this.renderMissions();
-    this.renderTimeline();
+    this.renderJourney();
     this.setupEventListeners();
-    this.setupIntersectionObserver();
+    this.setupNavHighlight();
     this.updateSoundToggleUI();
-    
-    // Fetch live GitHub stats
+
+    const year = document.getElementById("year");
+    if (year) year.textContent = new Date().getFullYear();
+
+    if (window.scrapbook) window.scrapbook.refresh(document);
+
     await this.fetchGitHubLiveStats();
   }
 
-  // --- Render Ability Cards ---
-  renderSkills(filter = "all") {
-    const grid = document.getElementById("arsenal-grid");
-    if (!grid) return;
+  // --- Internships ---
+  renderExperience() {
+    const list = document.getElementById("experience-list");
+    if (!list) return;
 
-    const filtered = filter === "all" ? SKILLS_DATA : SKILLS_DATA.filter(s => s.category === filter);
-    
-    grid.innerHTML = filtered.map((skill, index) => `
-      <div class="comic-card skill-card" data-category="${skill.category}" style="animation-delay: ${index * 0.05}s">
-        <div class="skill-card-header">
-          <span class="skill-icon">${skill.icon}</span>
-          <span class="skill-rank-badge">${skill.rank}</span>
-        </div>
-        <h3 class="skill-name">${skill.name}</h3>
-        <p class="skill-desc">${skill.desc}</p>
-        <div class="skill-power-bar-wrapper">
-          <div class="skill-power-label">
-            <span>POWER LEVEL</span>
-            <span class="skill-power-val">${skill.level}%</span>
+    list.innerHTML = EXPERIENCE_DATA.map((exp, i) => `
+      <article class="exp-entry">
+        <div class="exp-meta">
+          <div class="stamp exp-date-stamp">
+            <span>${escapeHTML(exp.stampTop)}</span>
+            <strong>${escapeHTML(exp.stampMain)}</strong>
           </div>
-          <div class="skill-power-bar">
-            <div class="skill-power-fill" style="width: ${skill.level}%"></div>
+          ${exp.current ? `<span class="exp-now">NOW</span>` : ""}
+        </div>
+        <div class="notebook-page exp-page paste torn" data-tear="top bottom" style="--r:${i % 2 ? "0.8deg" : "-0.8deg"}">
+          <span class="tape ${i % 2 ? "tape-corner-r" : "tape-corner-l"}" aria-hidden="true"></span>
+          <h3 class="exp-role">${escapeHTML(exp.role)}</h3>
+          <p class="exp-company"><strong>${escapeHTML(exp.company)}</strong> · ${escapeHTML(exp.location)} · ${escapeHTML(exp.dates)}</p>
+          <ul class="exp-bullets">
+            ${exp.bullets.map(b => `<li>${escapeHTML(b)}</li>`).join("")}
+          </ul>
+          <div class="exp-tags">
+            ${exp.tags.map(t => `<span class="washi">${escapeHTML(t)}</span>`).join("")}
           </div>
         </div>
-        <div class="skill-card-footer">
-          <span class="skill-sub-badge">${skill.badge}</span>
-        </div>
-      </div>
+      </article>
     `).join("");
-
-    // Reattach sound events
-    grid.querySelectorAll(".skill-card").forEach(card => {
-      card.addEventListener("mouseenter", () => {
-        if (window.comicAudio) window.comicAudio.playClick();
-      });
-      card.addEventListener("click", (e) => {
-        const rect = card.getBoundingClientRect();
-        spawnComicActionWord(rect.left + rect.width / 2, rect.top + 20, "POWER UP!");
-      });
-    });
-
-    if (window.comicAnimations) {
-      window.comicAnimations.init3DCardTilt();
-      window.comicAnimations.initScrollReveal();
-    }
   }
 
-  // --- Render Mission Covers ---
-  renderMissions() {
-    const grid = document.getElementById("missions-grid");
-    if (!grid) return;
+  // --- Projects: polaroid wall ---
+  renderProjects() {
+    const wall = document.getElementById("project-wall");
+    if (!wall) return;
 
-    grid.innerHTML = PROJECTS_DATA.map((proj, index) => `
-      <article class="comic-issue-cover" data-id="${proj.id}" style="animation-delay: ${index * 0.08}s">
-        <div class="issue-top-banner">
-          <span class="issue-code">${proj.missionNo}</span>
-          <span class="issue-clearance">${proj.stats.clearance}</span>
-        </div>
-        
-        <div class="issue-artwork-container">
-          <img src="${proj.coverImage}" alt="${proj.title} Cover Art" class="issue-cover-art" loading="lazy" />
-          <div class="issue-art-overlay"></div>
-          <div class="issue-badge-stamp">${proj.badge}</div>
-        </div>
-
-        <div class="issue-content-panel">
-          <h3 class="issue-title">${proj.title}</h3>
-          <h4 class="issue-subtitle">${proj.subtitle}</h4>
-          <p class="issue-tagline">“${proj.tagline}”</p>
-          
-          <div class="issue-tech-chips">
-            ${proj.techStack.slice(0, 5).map(t => `<span class="tech-chip">${t}</span>`).join("")}
-            ${proj.techStack.length > 5 ? `<span class="tech-chip more">+${proj.techStack.length - 5}</span>` : ""}
-          </div>
-
-          <div class="issue-actions">
-            <button class="comic-btn btn-red open-case-file" data-id="${proj.id}">
-              <span>READ CASE FILE</span>
-              <span class="btn-icon">📁</span>
-            </button>
-            <a href="${proj.githubUrl}" target="_blank" rel="noopener noreferrer" class="comic-btn btn-dark" title="View Source on GitHub">
-              <span>GITHUB</span>
-              <span class="btn-icon">↗</span>
-            </a>
+    wall.innerHTML = PROJECTS_DATA.map((p, i) => `
+      <article class="project-card${p.featured ? " is-featured" : ""}" data-id="${p.id}" data-category="${p.category}">
+        <figure class="polaroid paste" style="--r:${rot(i)}">
+          <span class="tape tape-top" aria-hidden="true"></span>
+          <span class="project-badge${p.badgeNow ? " badge-now" : ""}">${escapeHTML(p.badge)}</span>
+          <img src="${p.image}" alt="${escapeHTML(p.imageAlt)}" loading="lazy" />
+          <figcaption>${escapeHTML(p.caption)}</figcaption>
+        </figure>
+        <div class="project-note">
+          <p><strong>${escapeHTML(p.subtitle)}.</strong> ${escapeHTML(p.blurb)}</p>
+          <p class="project-stack">${p.stack.map(escapeHTML).join(" · ")}</p>
+          <div class="project-actions">
+            <button type="button" class="tape-btn btn-red open-notes" data-id="${p.id}">read the notes</button>
+            <a href="${p.githubUrl}" target="_blank" rel="noopener noreferrer" class="tape-btn btn-paper">code ↗</a>
+            ${p.liveUrl ? `<a href="${p.liveUrl}" target="_blank" rel="noopener noreferrer" class="tape-btn btn-gold">live ↗</a>` : ""}
           </div>
         </div>
       </article>
     `).join("");
 
-    // Attach click events
-    grid.querySelectorAll(".open-case-file").forEach(btn => {
-      btn.addEventListener("click", (e) => {
-        const id = btn.getAttribute("data-id");
-        this.openClassifiedModal(id);
-      });
+    wall.querySelectorAll(".project-card").forEach(card => {
+      card.addEventListener("mouseenter", () => window.comicAudio && window.comicAudio.playClick());
+      // Clicking the photo opens the notes too
+      card.querySelector(".polaroid").addEventListener("click", () => this.openProjectModal(card.dataset.id));
     });
-
-    grid.querySelectorAll(".comic-issue-cover").forEach(card => {
-      card.addEventListener("mouseenter", () => {
-        if (window.comicAudio) window.comicAudio.playClick();
-      });
+    wall.querySelectorAll(".open-notes").forEach(btn => {
+      btn.addEventListener("click", () => this.openProjectModal(btn.dataset.id));
     });
   }
 
-  // --- Render Timeline ---
-  renderTimeline() {
-    const container = document.getElementById("timeline-panels");
-    if (!container) return;
+  filterProjects(category) {
+    document.querySelectorAll(".project-card").forEach(card => {
+      const show = category === "all" || card.dataset.category === category;
+      card.classList.toggle("is-hidden", !show);
+    });
+  }
 
-    container.innerHTML = TIMELINE_DATA.map((item, index) => `
-      <div class="timeline-comic-panel ${index % 2 === 0 ? 'panel-left' : 'panel-right'}" style="animation-delay: ${index * 0.1}s">
-        <div class="timeline-node-marker">
-          <span class="timeline-node-icon">${item.icon}</span>
-        </div>
-        <div class="timeline-panel-box">
-          <div class="timeline-header">
-            <span class="timeline-issue-tag">${item.issue}</span>
-            <span class="timeline-date-tag">${item.date}</span>
-          </div>
-          <h3 class="timeline-title">${item.title}</h3>
-          <h4 class="timeline-sub">${item.subtitle}</h4>
-          <p class="timeline-narrative">${item.desc}</p>
-          <div class="timeline-badge">${item.badge}</div>
-        </div>
+  // --- Skills: sticky notes ---
+  renderSkills() {
+    const board = document.getElementById("skills-board");
+    if (!board) return;
+
+    board.innerHTML = SKILLS_DATA.map((s, i) => `
+      <div class="sticky-note sticky-${s.color} skill-note paste" style="--r:${rot(i + 3)}">
+        <span class="pin" aria-hidden="true"></span>
+        <h3>${escapeHTML(s.title)}</h3>
+        <ul>${s.items.map(it => `<li>${escapeHTML(it)}</li>`).join("")}</ul>
+        <span class="skill-emoji" aria-hidden="true">${s.emoji}</span>
       </div>
     `).join("");
   }
 
-  // --- Open Classified Mission Case File Modal ---
-  openClassifiedModal(projectId) {
-    const proj = PROJECTS_DATA.find(p => p.id === projectId);
-    if (!proj) return;
+  // --- Journey: ticket stops ---
+  renderJourney() {
+    const route = document.getElementById("journey-route");
+    if (!route) return;
 
-    const modal = document.getElementById("case-file-modal");
-    const container = document.getElementById("modal-classified-content");
-    if (!modal || !container) return;
+    route.innerHTML = JOURNEY_DATA.map((j, i) => `
+      <li class="journey-stop${j.future ? " is-future" : ""}">
+        <span class="journey-pin" aria-hidden="true">${j.icon}</span>
+        <div class="journey-card paste" style="--r:${i % 2 ? "1deg" : "-1deg"}">
+          <span class="journey-date">${escapeHTML(j.date)}</span>
+          <h3>${escapeHTML(j.title)}</h3>
+          <p>${escapeHTML(j.desc)}</p>
+        </div>
+      </li>
+    `).join("");
+  }
 
+  // --- Project notebook modal ---
+  openProjectModal(id) {
+    const p = PROJECTS_DATA.find(x => x.id === id);
+    const modal = document.getElementById("project-modal");
+    const content = document.getElementById("modal-content");
+    if (!p || !modal || !content) return;
+
+    this.lastFocus = document.activeElement;
     if (window.comicAudio) window.comicAudio.playWhoosh();
 
-    const cf = proj.classifiedFile;
-
-    container.innerHTML = `
-      <div class="classified-dossier-header">
-        <div class="dossier-stamp">DECLASSIFIED • LEVEL 5</div>
-        <div class="dossier-top-meta">
-          <span>CODENAME: <strong>${cf.dateCodename}</strong></span>
-          <span>STATUS: <strong class="text-green">${cf.status}</strong></span>
-          <span>MISSION: <strong>${proj.missionNo}</strong></span>
-        </div>
-        <h2 class="dossier-title">${proj.title}</h2>
-        <h3 class="dossier-sub">${proj.subtitle}</h3>
-      </div>
-
-      <div class="classified-grid">
-        <div class="classified-sidebar">
-          <div class="dossier-img-frame">
-            <img src="${proj.coverImage}" alt="${proj.title}" class="dossier-cover-img" />
-            <div class="dossier-frame-badge">${proj.badge}</div>
-          </div>
-
-          <div class="dossier-tech-arsenal">
-            <h4>TECH ARSENAL</h4>
-            <div class="dossier-chips">
-              ${proj.techStack.map(t => `<span class="tech-chip">${t}</span>`).join("")}
-            </div>
-          </div>
-
-          <div class="dossier-links">
-            ${proj.liveDemoUrl && proj.liveDemoUrl !== proj.githubUrl ? `
-              <a href="${proj.liveDemoUrl}" target="_blank" rel="noopener noreferrer" class="comic-btn btn-red w-full">
-                <span>LAUNCH LIVE DEMO</span>
-                <span>⚡</span>
-              </a>
-            ` : ""}
-            <a href="${proj.githubUrl}" target="_blank" rel="noopener noreferrer" class="comic-btn btn-dark w-full">
-              <span>EXPLORE REPOSITORY</span>
-              <span>🐙</span>
-            </a>
+    const n = p.notes;
+    content.innerHTML = `
+      <div class="spread-grid">
+        <div class="spread-left">
+          <figure class="polaroid">
+            <span class="tape tape-top" aria-hidden="true"></span>
+            <img src="${p.image}" alt="${escapeHTML(p.imageAlt)}" />
+            <figcaption>${escapeHTML(p.caption)}</figcaption>
+          </figure>
+          <div class="spread-status"><span class="stamp stamp-red">${escapeHTML(n.status)}</span></div>
+          <div class="spread-stack">${p.stack.map(t => `<span class="washi">${escapeHTML(t)}</span>`).join("")}</div>
+          <div class="spread-links">
+            ${p.liveUrl ? `<a href="${p.liveUrl}" target="_blank" rel="noopener noreferrer" class="tape-btn btn-red w-full">open live demo ↗</a>` : ""}
+            <a href="${p.githubUrl}" target="_blank" rel="noopener noreferrer" class="tape-btn btn-ink w-full">view on github ↗</a>
           </div>
         </div>
+        <div class="spread-right">
+          <span class="spread-kicker">PROJECT NOTES</span>
+          <h2 class="marker-title spread-title" id="modal-title">${escapeHTML(p.title)}</h2>
+          <p class="spread-sub">${escapeHTML(p.subtitle)}</p>
 
-        <div class="classified-main-intel">
-          <div class="intel-block">
-            <h4 class="intel-title">🚨 THE PROBLEM STATEMENT</h4>
-            <p class="intel-text">${cf.problem}</p>
-          </div>
+          <h4>the idea</h4>
+          <p>${escapeHTML(n.overview)}</p>
 
-          <div class="intel-block">
-            <h4 class="intel-title">💡 THE ENGINEERING SOLUTION</h4>
-            <p class="intel-text">${cf.solution}</p>
-          </div>
+          <h4>what it does</h4>
+          <ul>${n.features.map(f => `<li>${escapeHTML(f)}</li>`).join("")}</ul>
 
-          <div class="intel-block">
-            <h4 class="intel-title">⚡ KEY OPERATIONAL CAPABILITIES</h4>
-            <ul class="intel-feature-list">
-              ${cf.features.map(f => `<li><span class="bullet-star">★</span> <span>${f}</span></li>`).join("")}
-            </ul>
-          </div>
-
-          <div class="intel-block architecture-block">
-            <h4 class="intel-title">📐 ARCHITECTURAL BLUEPRINT</h4>
-            <div class="architecture-diagram">
-              <code>${cf.architecture}</code>
-            </div>
-          </div>
-
-          <div class="intel-columns">
-            <div class="intel-col">
-              <h5 class="col-title">⚔️ CHALLENGES FACED</h5>
-              <p class="col-text">${cf.challenges}</p>
-            </div>
-            <div class="intel-col">
-              <h5 class="col-title">🧠 INTEL LEARNED</h5>
-              <p class="col-text">${cf.learned}</p>
-            </div>
-          </div>
+          ${n.architecture ? `<h4>how it fits together</h4><code class="spread-arch">${escapeHTML(n.architecture)}</code>` : ""}
         </div>
       </div>
     `;
 
-    modal.classList.add("active");
+    modal.hidden = false;
+    requestAnimationFrame(() => modal.classList.add("active"));
     document.body.style.overflow = "hidden";
+    document.getElementById("modal-close-btn").focus();
   }
 
-  closeClassifiedModal() {
-    const modal = document.getElementById("case-file-modal");
-    if (modal) {
-      modal.classList.remove("active");
-      document.body.style.overflow = "";
-      if (window.comicAudio) window.comicAudio.playClick();
-    }
+  closeProjectModal() {
+    const modal = document.getElementById("project-modal");
+    if (!modal || modal.hidden) return;
+    modal.classList.remove("active");
+    document.body.style.overflow = "";
+    setTimeout(() => { modal.hidden = true; }, 200);
+    if (window.comicAudio) window.comicAudio.playClick();
+    if (this.lastFocus) this.lastFocus.focus();
   }
 
-  // --- Fetch GitHub Live Statistics & Repos ---
+  // --- GitHub live stats ---
   async fetchGitHubLiveStats() {
-    const reposContainer = document.getElementById("github-repos-grid");
     const statRepos = document.getElementById("stat-public-repos");
     const statStars = document.getElementById("stat-total-stars");
-    const statFollowers = document.getElementById("stat-followers");
-    const langBarContainer = document.getElementById("github-lang-breakdown");
+    const langBox = document.getElementById("github-lang-breakdown");
+    let profile = null;
 
     try {
-      // 1. Fetch User Data
       const userRes = await fetch("https://api.github.com/users/stashlop");
-      if (userRes.ok) {
-        this.profileData = await userRes.json();
-        if (statRepos) statRepos.textContent = this.profileData.public_repos || 26;
-        if (statFollowers) statFollowers.textContent = this.profileData.followers || 0;
-      }
+      if (userRes.ok) profile = await userRes.json();
 
-      // 2. Fetch Repositories
       const reposRes = await fetch("https://api.github.com/users/stashlop/repos?per_page=100&sort=updated");
-      if (reposRes.ok) {
-        this.cachedRepos = await reposRes.json();
-      } else {
-        throw new Error("API rate limited");
-      }
+      if (!reposRes.ok) throw new Error("GitHub API unavailable");
+      this.cachedRepos = (await reposRes.json()).filter(r => !r.fork);
     } catch (e) {
-      console.warn("Using offline / fallback repository data:", e);
-      // Robust fallback cached from actual repositories
+      console.warn("Using fallback repository data:", e);
       this.cachedRepos = [
-        { name: "bidwars", description: "🔥 [MAIN CURRENT FOCUS] Real-time competitive bidding and auction matrix with WebSocket synchronization and anti-sniping game theory.", language: "Python / Node", stargazers_count: 1, html_url: "https://github.com/stashlop/bidwars.git", updated_at: "2026-08-20T12:00:00Z", forks_count: 0 },
-        { name: "Karigar", description: "AI-powered marketplace assistant for Indian artisans with Google Cloud Vertex AI, story engine, voice & maps.", language: "Python", stargazers_count: 0, html_url: "https://github.com/stashlop/Karigar", updated_at: "2026-03-25T16:01:24Z", forks_count: 0 },
-        { name: "Itihaas", description: "Indian monument booking, UNESCO heritage platform with spaCy NLP chatbot, guide booking & WhatsApp alerts.", language: "Python", stargazers_count: 8, html_url: "https://github.com/stashlop/Itihaas", updated_at: "2026-08-20T09:19:21Z", forks_count: 0 },
-        { name: "Archive-Arcade-mini-project", description: "Full-stack digital archive, retro games commerce, cafe slot reservation & admin revenue dashboard.", language: "JavaScript", stargazers_count: 5, html_url: "https://github.com/stashlop/Archive-Arcade-mini-project", updated_at: "2026-04-11T04:37:09Z", forks_count: 1 },
-        { name: "jarvis-mlx", description: "Stark-level offline productivity assistant running on Apple Silicon MLX.", language: "Python", stargazers_count: 1, html_url: "https://github.com/stashlop/jarvis-mlx", updated_at: "2026-04-26T15:42:42Z", forks_count: 0 },
-        { name: "jenkins-pipeline-tutorial", description: "Declarative CI/CD pipeline automation with Jenkins, Maven, and Docker.", language: "Shell", stargazers_count: 0, html_url: "https://github.com/stashlop/jenkins-pipeline-tutorial", updated_at: "2025-11-06T07:06:22Z", forks_count: 0 },
-        { name: "star-schema", description: "Data engineering dimensional modeling and star schema design.", language: "SQL", stargazers_count: 0, html_url: "https://github.com/stashlop/star-schema", updated_at: "2026-01-13T13:25:30Z", forks_count: 0 },
-        { name: "dart", description: "Dart application architecture and reactive components.", language: "Dart", stargazers_count: 0, html_url: "https://github.com/stashlop/dart", updated_at: "2026-01-24T05:01:07Z", forks_count: 0 },
-        { name: "Echo-Verse", description: "Interactive audio and voice application interface.", language: "JavaScript", stargazers_count: 0, html_url: "https://github.com/stashlop/Echo-Verse", updated_at: "2025-10-14T18:43:57Z", forks_count: 0 },
-        { name: "Expense-Income-Tracker-IP-", description: "Financial telemetry and balance analytics dashboard.", language: "JavaScript", stargazers_count: 0, html_url: "https://github.com/stashlop/Expense-Income-Tracker-IP-", updated_at: "2025-10-07T19:17:41Z", forks_count: 0 }
+        { name: "Karigar", description: "AI-powered marketplace assistant for Indian artisans with Vertex AI, story engine, voice & maps.", language: "Python", stargazers_count: 0, html_url: "https://github.com/stashlop/Karigar" },
+        { name: "Itihaas", description: "Monument booking & heritage platform with spaCy NLP chatbot, guide booking & WhatsApp alerts.", language: "Python", stargazers_count: 8, html_url: "https://github.com/stashlop/Itihaas" },
+        { name: "Archive-Arcade-mini-project", description: "Digital archive, retro games commerce, café slot reservation & admin revenue dashboard.", language: "JavaScript", stargazers_count: 5, html_url: "https://github.com/stashlop/Archive-Arcade-mini-project" },
+        { name: "jarvis-mlx", description: "Offline productivity assistant running on Apple Silicon MLX.", language: "Python", stargazers_count: 1, html_url: "https://github.com/stashlop/jarvis-mlx" },
+        { name: "jenkins-pipeline-tutorial", description: "Declarative CI/CD pipeline automation with Jenkins, Maven and Docker.", language: "Shell", stargazers_count: 0, html_url: "https://github.com/stashlop/jenkins-pipeline-tutorial" },
+        { name: "star-schema", description: "Dimensional modelling and star-schema design.", language: "SQL", stargazers_count: 0, html_url: "https://github.com/stashlop/star-schema" },
+        { name: "dart", description: "Dart application architecture and reactive components.", language: "Dart", stargazers_count: 0, html_url: "https://github.com/stashlop/dart" },
+        { name: "Echo-Verse", description: "Interactive audio and voice application interface.", language: "JavaScript", stargazers_count: 0, html_url: "https://github.com/stashlop/Echo-Verse" }
       ];
     }
 
-    // Compute star sum and languages
-    let totalStars = 0;
-    const langCounts = {};
-
-    this.cachedRepos.forEach(repo => {
-      totalStars += (repo.stargazers_count || 0);
-      const lang = repo.language || "Other";
-      langCounts[lang] = (langCounts[lang] || 0) + 1;
-    });
-
+    const totalStars = this.cachedRepos.reduce((sum, r) => sum + (r.stargazers_count || 0), 0);
     if (statStars) statStars.textContent = totalStars;
-    if (statRepos && !this.profileData) statRepos.textContent = this.cachedRepos.length;
+    if (statRepos) statRepos.textContent = profile?.public_repos ?? this.cachedRepos.length;
 
-    // Render language distribution bar
-    if (langBarContainer) {
-      const totalLangRepos = Object.values(langCounts).reduce((a, b) => a + b, 0);
-      const topLangs = Object.entries(langCounts)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 5);
+    if (langBox) {
+      const counts = {};
+      this.cachedRepos.forEach(r => { const l = r.language || "Other"; counts[l] = (counts[l] || 0) + 1; });
+      const total = Object.values(counts).reduce((a, b) => a + b, 0) || 1;
+      const top = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 5);
+      const colors = ["#d6262e", "#f4b833", "#22409a", "#6fb35a", "#e77fa3"];
 
-      langBarContainer.innerHTML = `
+      langBox.innerHTML = `
         <div class="lang-bar-track">
-          ${topLangs.map(([lang, count], idx) => {
-            const pct = Math.round((count / totalLangRepos) * 100);
-            const colors = ["#ff2a55", "#ffd129", "#00f2fe", "#a855f7", "#22c55e", "#94a3b8"];
-            return `<div class="lang-segment" style="width: ${pct}%; background-color: ${colors[idx % colors.length]};" title="${lang}: ${pct}%"></div>`;
-          }).join("")}
+          ${top.map(([lang, c], i) => `<div class="lang-segment" style="width:${(c / total) * 100}%;background:${colors[i]}" title="${escapeHTML(lang)}"></div>`).join("")}
         </div>
         <div class="lang-legend">
-          ${topLangs.map(([lang, count], idx) => {
-            const pct = Math.round((count / totalLangRepos) * 100);
-            const colors = ["#ff2a55", "#ffd129", "#00f2fe", "#a855f7", "#22c55e", "#94a3b8"];
-            return `
-              <span class="legend-item">
-                <span class="legend-dot" style="background: ${colors[idx % colors.length]}"></span>
-                <strong>${lang}</strong> ${pct}%
-              </span>
-            `;
-          }).join("")}
+          ${top.map(([lang, c], i) => `<span class="legend-item"><span class="legend-dot" style="background:${colors[i]}"></span><strong>${escapeHTML(lang)}</strong>&nbsp;${Math.round((c / total) * 100)}%</span>`).join("")}
         </div>
       `;
     }
 
-    // Render Repos
     this.renderGitHubRepos(this.cachedRepos);
   }
 
-  // --- Render GitHub Repos in Command Center ---
   renderGitHubRepos(repos) {
-    const container = document.getElementById("github-repos-grid");
-    if (!container) return;
+    const box = document.getElementById("github-repos-grid");
+    if (!box) return;
 
-    container.innerHTML = repos.slice(0, 8).map(r => `
-      <a href="${r.html_url}" target="_blank" rel="noopener noreferrer" class="command-repo-card">
-        <div class="repo-card-top">
-          <span class="repo-icon">📦</span>
-          <span class="repo-star-count">★ ${r.stargazers_count || 0}</span>
-        </div>
-        <h4 class="repo-name">${r.name}</h4>
-        <p class="repo-description">${r.description || "Active engineering repository & code assets."}</p>
-        <div class="repo-card-bottom">
-          <span class="repo-lang-tag">${r.language || "Code"}</span>
-          <span class="repo-link-arrow">↗</span>
-        </div>
+    box.innerHTML = repos.slice(0, 8).map((r, i) => `
+      <a href="${escapeHTML(r.html_url)}" target="_blank" rel="noopener noreferrer" class="repo-tag" style="--r:${rot(i)}">
+        <h3 class="repo-name">${escapeHTML(r.name)}</h3>
+        <p class="repo-description">${escapeHTML(r.description || "Code, experiments and notes.")}</p>
+        <div class="repo-meta"><span>${escapeHTML(r.language || "Code")}</span><span>★ ${r.stargazers_count || 0}</span></div>
       </a>
     `).join("");
   }
 
-  // --- Setup Event Listeners ---
+  // --- Events ---
   setupEventListeners() {
-    // Avatar Mode Switcher (Real Photo vs Comic Avatar)
-    const avatarImg = document.getElementById("hero-main-avatar");
-    const switchBtns = document.querySelectorAll(".avatar-switch-btn");
-    switchBtns.forEach(btn => {
-      btn.addEventListener("click", () => {
-        switchBtns.forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        const imgSrc = btn.getAttribute("data-img");
-        if (avatarImg && imgSrc) {
-          avatarImg.style.opacity = "0.2";
-          setTimeout(() => {
-            avatarImg.src = imgSrc;
-            avatarImg.style.opacity = "1";
-          }, 150);
-        }
-        if (window.comicAudio) window.comicAudio.playZap();
-      });
-    });
-
-    // Sound FX Toggle
+    // Sound toggle
     const soundBtn = document.getElementById("btn-toggle-sound");
     if (soundBtn) {
       soundBtn.addEventListener("click", () => {
-        if (window.comicAudio) {
-          const isMuted = window.comicAudio.toggleMute();
-          this.updateSoundToggleUI();
-          if (!isMuted) window.comicAudio.playCompile();
-        }
+        if (!window.comicAudio) return;
+        const muted = window.comicAudio.toggleMute();
+        this.updateSoundToggleUI();
+        if (!muted) window.comicAudio.playCompile();
       });
     }
 
-    // Ability Filter Tabs
-    const filterTabs = document.querySelectorAll(".arsenal-filter-btn");
-    filterTabs.forEach(tab => {
-      tab.addEventListener("click", () => {
-        filterTabs.forEach(t => t.classList.remove("active"));
-        tab.classList.add("active");
-        const category = tab.getAttribute("data-category");
-        this.renderSkills(category);
+    // Project filters
+    const chips = document.querySelectorAll(".filter-chip");
+    chips.forEach(chip => {
+      chip.addEventListener("click", () => {
+        chips.forEach(c => { c.classList.remove("active"); c.setAttribute("aria-selected", "false"); });
+        chip.classList.add("active");
+        chip.setAttribute("aria-selected", "true");
+        this.filterProjects(chip.dataset.category);
         if (window.comicAudio) window.comicAudio.playZap();
       });
     });
 
-    // Case File Modal Close
-    const closeBtn = document.getElementById("modal-close-btn");
-    const backdrop = document.getElementById("case-file-modal");
-    if (closeBtn) closeBtn.addEventListener("click", () => this.closeClassifiedModal());
-    if (backdrop) {
-      backdrop.addEventListener("click", (e) => {
-        if (e.target === backdrop) this.closeClassifiedModal();
-      });
-    }
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") this.closeClassifiedModal();
+    // Modal
+    const modal = document.getElementById("project-modal");
+    document.getElementById("modal-close-btn")?.addEventListener("click", () => this.closeProjectModal());
+    modal?.addEventListener("click", e => { if (e.target === modal) this.closeProjectModal(); });
+    document.addEventListener("keydown", e => { if (e.key === "Escape") this.closeProjectModal(); });
+
+    // Click "THWIP!" words on empty space
+    document.addEventListener("click", e => {
+      if (e.target.closest("a, button, input, textarea, label, #project-modal, .site-header")) return;
+      spawnSfxWord(e.clientX, e.clientY);
     });
 
-    // Global comic click pop effects
-    document.addEventListener("click", (e) => {
-      // Don't trigger if clicked inside modal or navigation
-      if (e.target.closest("#case-file-modal") || e.target.closest("nav") || e.target.closest("input") || e.target.closest("textarea")) {
-        return;
-      }
-      spawnComicActionWord(e.clientX, e.clientY);
-    });
+    document.getElementById("btn-view-projects")?.addEventListener("click", () => window.comicAudio && window.comicAudio.playZap());
 
-    // Hero action buttons sound
-    const heroBtn1 = document.getElementById("btn-start-story");
-    const heroBtn2 = document.getElementById("btn-view-projects");
-    if (heroBtn1) {
-      heroBtn1.addEventListener("click", () => {
-        if (window.comicAudio) window.comicAudio.playCompile();
-      });
-    }
-    if (heroBtn2) {
-      heroBtn2.addEventListener("click", () => {
-        if (window.comicAudio) window.comicAudio.playZap();
-      });
-    }
-
-    // Contact Form submission
-    const contactForm = document.getElementById("comic-contact-form");
-    if (contactForm) {
-      contactForm.addEventListener("submit", (e) => {
+    // Contact postcard → opens the visitor's mail app with the message filled in
+    const form = document.getElementById("contact-form");
+    if (form) {
+      form.addEventListener("submit", e => {
         e.preventDefault();
-        const nameInput = document.getElementById("contact-name");
-        const emailInput = document.getElementById("contact-email");
-        const messageInput = document.getElementById("contact-message");
-        const statusBox = document.getElementById("contact-status-box");
+        const name = document.getElementById("contact-name").value.trim();
+        const email = document.getElementById("contact-email").value.trim();
+        const message = document.getElementById("contact-message").value.trim();
+        const status = document.getElementById("contact-status-box");
 
-        if (statusBox) {
-          statusBox.innerHTML = `
-            <div class="comic-alert-success">
-              <span class="alert-icon">⚡</span>
-              <div>
-                <strong>MISSION DISPATCHED!</strong>
-                <p>Transmission received from ${nameInput ? nameInput.value : "Agent"}. Stash Lopes will rendezvous with you shortly!</p>
-              </div>
-            </div>
-          `;
-          statusBox.classList.add("visible");
+        if (!name || !email || !message) {
+          status.innerHTML = `<div class="status-note is-error">Almost! Fill in your name, email and a message first.</div>`;
+          return;
         }
 
+        const subject = encodeURIComponent(`Hello from ${name}`);
+        const body = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
+        window.location.href = `mailto:stashlopes27@gmail.com?subject=${subject}&body=${body}`;
+
+        status.innerHTML = `<div class="status-note">Postcard ready — your mail app should open with it. Thanks, ${escapeHTML(name)}!</div>`;
         if (window.comicAudio) window.comicAudio.playCompile();
-        contactForm.reset();
       });
     }
 
-    // Terminal Interactive CLI in Command Center
-    const terminalInput = document.getElementById("terminal-cmd-input");
-    const terminalOutput = document.getElementById("terminal-logs");
-    if (terminalInput && terminalOutput) {
-      terminalInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-          const rawCmd = terminalInput.value.trim().toLowerCase();
-          terminalInput.value = "";
-          this.executeTerminalCmd(rawCmd, terminalOutput);
-        }
+    // Terminal
+    const input = document.getElementById("terminal-cmd-input");
+    const out = document.getElementById("terminal-logs");
+    if (input && out) {
+      input.addEventListener("keydown", e => {
+        if (e.key !== "Enter") return;
+        const cmd = input.value.trim().toLowerCase();
+        input.value = "";
+        if (cmd) this.runCommand(cmd, out);
       });
     }
 
-    // Mobile Hamburger Menu
-    const menuToggle = document.getElementById("mobile-menu-toggle");
-    const navLinks = document.getElementById("comic-nav-links");
-    if (menuToggle && navLinks) {
-      menuToggle.addEventListener("click", () => {
-        navLinks.classList.toggle("open");
-        menuToggle.classList.toggle("active");
+    // Mobile menu
+    const toggle = document.getElementById("mobile-menu-toggle");
+    const links = document.getElementById("nav-links");
+    if (toggle && links) {
+      toggle.addEventListener("click", () => {
+        const open = links.classList.toggle("open");
+        toggle.classList.toggle("active", open);
+        toggle.setAttribute("aria-expanded", String(open));
         if (window.comicAudio) window.comicAudio.playClick();
       });
-
-      // Close menu on nav item click
-      navLinks.querySelectorAll("a").forEach(a => {
-        a.addEventListener("click", () => {
-          navLinks.classList.remove("open");
-          menuToggle.classList.remove("active");
-          if (window.comicAudio) window.comicAudio.playZap();
-        });
-      });
+      links.querySelectorAll("a").forEach(a => a.addEventListener("click", () => {
+        links.classList.remove("open");
+        toggle.classList.remove("active");
+        toggle.setAttribute("aria-expanded", "false");
+      }));
     }
   }
 
-  // --- Terminal Command Handler ---
-  executeTerminalCmd(cmd, outputElem) {
+  // --- Terminal commands ---
+  runCommand(cmd, out) {
     if (window.comicAudio) window.comicAudio.playZap();
 
-    const logLine = document.createElement("div");
-    logLine.className = "terminal-line user-cmd";
-    logLine.textContent = `stash@cyber-matrix:~$ ${cmd}`;
-    outputElem.appendChild(logLine);
+    const echo = document.createElement("div");
+    echo.className = "terminal-line user-cmd";
+    echo.textContent = `$ ${cmd}`;
+    out.appendChild(echo);
 
-    const resLine = document.createElement("div");
-    resLine.className = "terminal-line bot-res";
+    const res = document.createElement("div");
+    res.className = "terminal-line bot-res";
+
+    const current = EXPERIENCE_DATA.find(e => e.current);
 
     switch (cmd) {
       case "help":
-        resLine.innerHTML = `
-          <span>AVAILABLE COMMANDS:</span><br>
-          - <code>whoami</code>     : Display Developer hero identity<br>
-          - <code>experience</code> : Display professional software engineering experience<br>
-          - <code>current</code>    : Display current main working project (BidWars)<br>
-          - <code>skills</code>     : List primary technical superpowers<br>
-          - <code>missions</code>   : Display mission roster<br>
-          - <code>aksa</code>       : Display CodedbyAKSA engineering guild info<br>
-          - <code>linkedin</code>   : Open verified LinkedIn transmission frequency<br>
-          - <code>github</code>     : Display GitHub repository telemetry<br>
-          - <code>contact</code>    : Open emergency communication link<br>
-          - <code>sudo hire stash</code> : Immediate full-access recruiter pass<br>
-          - <code>clear</code>      : Clear terminal screen
-        `;
+        res.innerHTML = `commands: <code>whoami</code> <code>internships</code> <code>now</code> <code>projects</code> <code>skills</code> <code>education</code> <code>awards</code> <code>contact</code> <code>sudo hire stash</code> <code>clear</code>`;
         break;
       case "whoami":
-        resLine.innerHTML = `<span>HERO: Stash Lopes | IT Engineer • Developer • AI/ML Enthusiast | GitHub: @stashlop | Guild: CodedbyAKSA | LinkedIn: https://www.linkedin.com/in/stash-lopes-176068333/</span>`;
+        res.textContent = "Stash Lopes — Full-Stack Developer & UI/UX Designer · Mumbai, India · github.com/stashlop";
         break;
+      case "internships":
       case "experience":
-      case "internship":
-      case "voltamp":
-        resLine.innerHTML = `<span class="text-gold">🏢 PROFESSIONAL INTERNSHIP: Software Development Intern @ Volt-Amp Logic Controls Pvt. Ltd. (Intelligent Instrumentation) | Duration: 31-Jan-2026 to 1-Aug-2026 (6 Months) | Focus: Industrial instrumentation logic, robust software delivery, and high-reliability systems.</span>`;
+      case "work":
+        res.innerHTML = EXPERIENCE_DATA.map(e => `• <strong>${escapeHTML(e.role)}</strong> @ ${escapeHTML(e.company)} (${escapeHTML(e.dates)})`).join("<br>");
         break;
-      case "aksa":
-      case "org":
-      case "guild":
-        resLine.innerHTML = `<span class="text-gold">⚔️ GUILD: CodedbyAKSA (https://github.com/CodedbyAKSA) — A party of 4 developers embarking on epic quests across the codebase, battling bugs, and force-pushing to victory!</span>`;
-        break;
-      case "linkedin":
-        resLine.innerHTML = `<span class="text-cyan">💼 LINKEDIN FREQUENCY: https://www.linkedin.com/in/stash-lopes-176068333/</span>`;
-        break;
+      case "now":
       case "current":
-      case "bidwars":
-        resLine.innerHTML = `<span class="text-gold">🔥 CURRENT MAIN MISSION: BIDWARS (https://github.com/stashlop/bidwars.git) — Real-time competitive bidding and auction battleground with WebSocket latency optimization and anti-sniping game theory.</span>`;
+        res.innerHTML = `<span class="text-red">${escapeHTML(current.role)} @ ${escapeHTML(current.company)}</span> — and building HeroBid on the side.`;
+        break;
+      case "projects":
+      case "missions":
+        res.textContent = PROJECTS_DATA.map(p => p.title).join(" · ");
         break;
       case "skills":
-        resLine.innerHTML = `<span>ARSENAL: Python, WebSockets, Vertex AI, Gemini, OpenCV, YOLO, Flask, Node.js, TypeScript, Docker, Jenkins, Google Cloud</span>`;
+        res.textContent = SKILLS_DATA.map(s => `${s.title}: ${s.items.join(", ")}`).join(" | ");
         break;
-      case "missions":
-        resLine.innerHTML = `<span>ACTIVE MISSIONS: #000 BIDWARS (Current Main Focus), #001 Karigar (Vertex AI), #002 Project Drishti (Vision), #003 Itihaas (NLP/Tourism), #004 Archive & Arcade (Commerce), #005 Jarvis-MLX (Offline AI), #006 StashPipeline (CI/CD)</span>`;
+      case "education":
+        res.textContent = "B.E. Information Technology — St. Francis Institute of Technology, University of Mumbai (expected 2027)";
         break;
-      case "github":
-        resLine.innerHTML = `<span>GITHUB: https://github.com/stashlop (26 Repositories, Python/JS/HTML/Shell/SQL)</span>`;
+      case "awards":
+        res.textContent = "1st Place, Colloquium 2025 (Itihaas) · Winner, SFIT IT Dept Hackathon · Google GenAI Exchange participant · Social Media Head, IEEE SFIT";
         break;
       case "contact":
-        resLine.innerHTML = `<span>TRANSMISSION: Ready to rendezvous. Use Issue #05 form or email directly!</span>`;
+        res.innerHTML = `email <a class="ink-link" href="mailto:stashlopes27@gmail.com">stashlopes27@gmail.com</a> — or send the postcard below.`;
         break;
       case "sudo hire stash":
       case "hire":
-        resLine.innerHTML = `<span class="text-gold">🚨 ACCESS GRANTED! You are about to hire a top-tier IT Engineer & AI Builder. Let's make it happen!</span>`;
+        res.innerHTML = `<span class="text-red">ACCESS GRANTED.</span> Great call — <a class="ink-link" href="#contact">let's talk</a>.`;
         if (window.comicAudio) window.comicAudio.playCompile();
         break;
       case "clear":
-        outputElem.innerHTML = "";
+        out.innerHTML = "";
         return;
       default:
-        resLine.innerHTML = `<span class="text-red">Command not recognized: "${cmd}". Type 'help' for available protocol commands.</span>`;
-        break;
+        res.innerHTML = `<span class="text-red">not found: "${escapeHTML(cmd)}"</span> — try <code>help</code>`;
     }
 
-    outputElem.appendChild(resLine);
-    outputElem.scrollTop = outputElem.scrollHeight;
+    out.appendChild(res);
+    out.scrollTop = out.scrollHeight;
   }
 
-  // --- Update Sound Toggle UI ---
   updateSoundToggleUI() {
     const btn = document.getElementById("btn-toggle-sound");
     if (!btn || !window.comicAudio) return;
     const muted = window.comicAudio.isMuted();
-    btn.innerHTML = muted ? `<span>🔇 SFX OFF</span>` : `<span>🔊 SFX ON</span>`;
-    btn.setAttribute("title", muted ? "Sound Effects Muted (Click to Enable)" : "Sound Effects Enabled (Click to Mute)");
+    btn.textContent = muted ? "🔇 sfx off" : "🔊 sfx on";
     btn.classList.toggle("muted", muted);
   }
 
-  // --- Scroll Observer for Active Tab Highlighting ---
-  setupIntersectionObserver() {
-    const sections = document.querySelectorAll("section[id]");
-    const navLinks = document.querySelectorAll(".comic-nav-link");
-
-    const observer = new IntersectionObserver((entries) => {
+  // --- Highlight nav link of the section in view ---
+  setupNavHighlight() {
+    const links = document.querySelectorAll(".nav-link");
+    const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const id = entry.target.getAttribute("id");
-          navLinks.forEach(link => {
-            link.classList.toggle("active", link.getAttribute("href") === `#${id}`);
-          });
-        }
+        if (!entry.isIntersecting) return;
+        const id = entry.target.id;
+        links.forEach(l => l.classList.toggle("active", l.getAttribute("href") === `#${id}`));
       });
-    }, {
-      root: null,
-      threshold: 0.25
-    });
-
-    sections.forEach(sec => observer.observe(sec));
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    document.querySelectorAll("main section[id]").forEach(s => observer.observe(s));
   }
 }
 
-// Instantiate on DOM load
 document.addEventListener("DOMContentLoaded", () => {
-  window.comicApp = new ComicPortfolioApp();
-  window.comicApp.init();
+  window.portfolioApp = new PortfolioApp();
+  window.portfolioApp.init();
 });

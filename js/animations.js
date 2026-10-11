@@ -1,202 +1,157 @@
 /**
- * The Developer Comic - Animations & Visual FX Engine
- * Provides 3D Card Tilt, Holographic Foil Shine, Dynamic Particle Canvas, and Comic Particle Sparks.
+ * Scrapbook FX
+ * Torn paper edges, ransom-note cut-out letters and "pasted-in" scroll reveals.
  */
 
-class ComicAnimationEngine {
+document.documentElement.classList.add("js");
+
+class ScrapbookFX {
   constructor() {
-    this.canvas = null;
-    this.ctx = null;
-    this.particles = [];
-    this.symbols = ["01", "{ }", "λ", "=>", "AI", "★", "⚡", "BAM!", "GIT", "MLX", "V1.0", "SYS", "0xFF"];
-    this.colors = ["#ff2a55", "#ffd129", "#00f2fe", "#a855f7", "#ffffff"];
-    this.mouseX = window.innerWidth / 2;
-    this.mouseY = window.innerHeight / 2;
+    this.observer = null;
   }
 
   init() {
-    this.initCanvasBackground();
-    this.init3DCardTilt();
-    this.initCursorSparks();
-    this.initScrollReveal();
+    this.tearAll(document);
+    this.ransomAll(document);
+    this.initReveal();
+    this.refresh(document);
   }
 
-  // --- 1. Background Cyber Canvas Particles ---
-  initCanvasBackground() {
-    this.canvas = document.getElementById("comic-bg-canvas");
-    if (!this.canvas) {
-      this.canvas = document.createElement("canvas");
-      this.canvas.id = "comic-bg-canvas";
-      this.canvas.className = "comic-bg-canvas";
-      document.body.prepend(this.canvas);
+  // Re-scan a subtree after content is rendered dynamically
+  refresh(root = document) {
+    this.tearAll(root);
+    this.ransomAll(root);
+    root.querySelectorAll(".paste:not([data-observed])").forEach(el => {
+      el.dataset.observed = "1";
+      if (this.observer) this.observer.observe(el);
+      else el.classList.add("revealed");
+    });
+  }
+
+  // --- Deterministic PRNG so each element keeps the same torn shape ---
+  static rng(seed) {
+    let t = seed >>> 0;
+    return () => {
+      t += 0x6d2b79f5;
+      let r = Math.imul(t ^ (t >>> 15), 1 | t);
+      r ^= r + Math.imul(r ^ (r >>> 7), 61 | r);
+      return ((r ^ (r >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  // --- 1. Torn paper edges via clip-path ---
+  // data-tear="all" | "top" | "bottom" | "top bottom"
+  tearAll(root) {
+    root.querySelectorAll(".torn:not([data-torn])").forEach((el, i) => {
+      el.dataset.torn = "1";
+      const spec = (el.dataset.tear || "all").split(/\s+/);
+      const all = spec.includes("all");
+      const edges = {
+        top: all || spec.includes("top"),
+        bottom: all || spec.includes("bottom"),
+        left: all || spec.includes("left"),
+        right: all || spec.includes("right")
+      };
+      const seed = (el.textContent.length + 1) * 9301 + i * 49297 + (el.id ? el.id.length * 233 : 0);
+      el.style.clipPath = ScrapbookFX.tornPolygon(edges, ScrapbookFX.rng(seed));
+
+      // Shadows must live outside the clipped element, so wrap it
+      const wrap = document.createElement("div");
+      wrap.className = "torn-shadow";
+      const display = getComputedStyle(el).display;
+      wrap.style.display = display.startsWith("inline") ? "inline-block" : "block";
+      el.parentNode.insertBefore(wrap, el);
+      wrap.appendChild(el);
+    });
+  }
+
+  static tornPolygon(edges, rand) {
+    const depth = 7;
+    const pts = [];
+    const jag = () => (rand() * depth).toFixed(1);
+
+    // top edge, left → right
+    if (edges.top) {
+      const n = 28;
+      for (let i = 0; i <= n; i++) pts.push(`${((i / n) * 100).toFixed(2)}% ${jag()}px`);
+    } else {
+      pts.push("0% 0%", "100% 0%");
     }
 
-    this.ctx = this.canvas.getContext("2d");
-    this.resizeCanvas();
-    window.addEventListener("resize", () => this.resizeCanvas());
-
-    // Generate initial floating particles
-    const particleCount = window.innerWidth < 768 ? 24 : 50;
-    this.particles = [];
-    for (let i = 0; i < particleCount; i++) {
-      this.particles.push({
-        x: Math.random() * this.canvas.width,
-        y: Math.random() * this.canvas.height,
-        symbol: this.symbols[Math.floor(Math.random() * this.symbols.length)],
-        color: this.colors[Math.floor(Math.random() * this.colors.length)],
-        size: Math.floor(Math.random() * 8) + 10,
-        speedX: (Math.random() - 0.5) * 0.6,
-        speedY: (Math.random() - 0.5) * 0.6 - 0.3,
-        opacity: Math.random() * 0.45 + 0.15,
-        rotation: Math.random() * Math.PI * 2,
-        rotSpeed: (Math.random() - 0.5) * 0.02
-      });
+    // right edge, top → bottom
+    if (edges.right) {
+      const n = 8;
+      for (let i = 1; i < n; i++) pts.push(`calc(100% - ${jag()}px) ${((i / n) * 100).toFixed(2)}%`);
     }
 
-    this.animateParticles();
+    // bottom edge, right → left
+    if (edges.bottom) {
+      const n = 28;
+      for (let i = n; i >= 0; i--) pts.push(`${((i / n) * 100).toFixed(2)}% calc(100% - ${jag()}px)`);
+    } else {
+      pts.push("100% 100%", "0% 100%");
+    }
+
+    // left edge, bottom → top
+    if (edges.left) {
+      const n = 8;
+      for (let i = n - 1; i > 0; i--) pts.push(`${jag()}px ${((i / n) * 100).toFixed(2)}%`);
+    }
+
+    return `polygon(${pts.join(", ")})`;
   }
 
-  resizeCanvas() {
-    if (!this.canvas) return;
-    this.canvas.width = window.innerWidth;
-    this.canvas.height = window.innerHeight;
-  }
+  // --- 2. Ransom-note letters cut from magazines ---
+  ransomAll(root) {
+    const looks = [
+      { bg: "#f7f2e4", fg: "#1d1b19", font: '"Special Elite", monospace' },
+      { bg: "#d6262e", fg: "#ffffff", font: '"Permanent Marker", cursive' },
+      { bg: "#f4b833", fg: "#1d1b19", font: "Georgia, serif" },
+      { bg: "#1b2846", fg: "#f7f2e4", font: "Impact, 'Arial Black', sans-serif" },
+      { bg: "#e3ddcf", fg: "#d6262e", font: '"Kalam", cursive' },
+      { bg: "#111111", fg: "#f4b833", font: '"Special Elite", monospace' }
+    ];
 
-  animateParticles() {
-    if (!this.ctx || !this.canvas) return;
+    root.querySelectorAll("[data-ransom]:not([data-ransomed])").forEach((el, k) => {
+      el.dataset.ransomed = "1";
+      const rand = ScrapbookFX.rng(k * 7919 + el.textContent.length * 31);
+      const text = el.textContent.trim();
+      el.setAttribute("aria-label", text);
+      el.textContent = "";
 
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-    this.particles.forEach(p => {
-      p.x += p.speedX;
-      p.y += p.speedY;
-      p.rotation += p.rotSpeed;
-
-      if (p.x < -40) p.x = this.canvas.width + 40;
-      if (p.x > this.canvas.width + 40) p.x = -40;
-      if (p.y < -40) p.y = this.canvas.height + 40;
-      if (p.y > this.canvas.height + 40) p.y = -40;
-
-      this.ctx.save();
-      this.ctx.translate(p.x, p.y);
-      this.ctx.rotate(p.rotation);
-      this.ctx.globalAlpha = p.opacity;
-      this.ctx.fillStyle = p.color;
-      this.ctx.font = `900 ${p.size}px "JetBrains Mono", monospace`;
-      this.ctx.fillText(p.symbol, 0, 0);
-      this.ctx.restore();
-    });
-
-    requestAnimationFrame(() => this.animateParticles());
-  }
-
-  // --- 2. Interactive 3D Card Tilt with Holographic Specular Shine ---
-  init3DCardTilt() {
-    const cards = document.querySelectorAll(".comic-issue-cover, .skill-card, .hero-art-frame, .comic-panel, .command-repo-card");
-
-    cards.forEach(card => {
-      // Add specular foil shine layer
-      if (!card.querySelector(".card-holo-shine")) {
-        const shine = document.createElement("div");
-        shine.className = "card-holo-shine";
-        card.appendChild(shine);
-      }
-
-      card.addEventListener("mousemove", (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-
-        const rotateX = ((y - centerY) / centerY) * -10;
-        const rotateY = ((x - centerX) / centerX) * 10;
-
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-        
-        // Update shine position
-        const pctX = (x / rect.width) * 100;
-        const pctY = (y / rect.height) * 100;
-        card.style.setProperty("--shine-x", `${pctX}%`);
-        card.style.setProperty("--shine-y", `${pctY}%`);
-      });
-
-      card.addEventListener("mouseleave", () => {
-        card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+      [...text].forEach(ch => {
+        const span = document.createElement("span");
+        span.setAttribute("aria-hidden", "true");
+        if (ch === " ") {
+          span.className = "ransom-space";
+        } else {
+          const look = looks[Math.floor(rand() * looks.length)];
+          span.className = "ransom-letter";
+          span.textContent = ch;
+          span.style.background = look.bg;
+          span.style.color = look.fg;
+          span.style.fontFamily = look.font;
+          span.style.transform = `rotate(${(rand() * 14 - 7).toFixed(1)}deg) translateY(${(rand() * 4 - 2).toFixed(1)}px)`;
+          span.style.fontSize = `${(0.9 + rand() * 0.35).toFixed(2)}em`;
+        }
+        el.appendChild(span);
       });
     });
   }
 
-  // --- 3. Cursor Comic Spark Trail ---
-  initCursorSparks() {
-    let lastSparkTime = 0;
-
-    window.addEventListener("mousemove", (e) => {
-      const now = Date.now();
-      if (now - lastSparkTime > 75) { // throttled to 75ms
-        lastSparkTime = now;
-        this.createCursorSpark(e.clientX, e.clientY);
-      }
-    });
-
-    window.addEventListener("click", (e) => {
-      for (let i = 0; i < 6; i++) {
-        this.createCursorSpark(e.clientX, e.clientY, true);
-      }
-    });
-  }
-
-  createCursorSpark(x, y, isBurst = false) {
-    const spark = document.createElement("div");
-    spark.className = "comic-cursor-spark";
-
-    const colors = ["#ff2a55", "#ffd129", "#00f2fe", "#ffffff"];
-    const color = colors[Math.floor(Math.random() * colors.length)];
-    const size = isBurst ? Math.random() * 12 + 8 : Math.random() * 6 + 4;
-
-    const angle = isBurst ? Math.random() * Math.PI * 2 : Math.random() * Math.PI - Math.PI / 2;
-    const distance = isBurst ? Math.random() * 40 + 20 : Math.random() * 15 + 5;
-    const destX = x + Math.cos(angle) * distance;
-    const destY = y + Math.sin(angle) * distance;
-
-    spark.style.left = `${x}px`;
-    spark.style.top = `${y}px`;
-    spark.style.width = `${size}px`;
-    spark.style.height = `${size}px`;
-    spark.style.backgroundColor = color;
-    spark.style.boxShadow = `0 0 8px ${color}`;
-
-    document.body.appendChild(spark);
-
-    spark.animate([
-      { transform: "translate(-50%, -50%) scale(1)", opacity: 1 },
-      { transform: `translate(${destX - x}px, ${destY - y}px) scale(0)`, opacity: 0 }
-    ], {
-      duration: isBurst ? 550 : 380,
-      easing: "cubic-bezier(0.25, 1, 0.5, 1)"
-    }).onfinish = () => spark.remove();
-  }
-
-  // --- 4. Scroll Reveal Animations ---
-  initScrollReveal() {
-    const revealElements = document.querySelectorAll(".comic-panel, .comic-issue-cover, .skill-card, .timeline-comic-panel, .command-hud-grid, .final-boss-panel");
-
-    const observer = new IntersectionObserver((entries) => {
+  // --- 3. Pieces get "pasted" onto the page as they scroll in ---
+  initReveal() {
+    if (!("IntersectionObserver" in window)) return;
+    this.observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.classList.add("comic-revealed");
+          entry.target.classList.add("revealed");
+          this.observer.unobserve(entry.target);
         }
       });
-    }, {
-      threshold: 0.15
-    });
-
-    revealElements.forEach(el => observer.observe(el));
+    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
   }
 }
 
-// Initialize on DOM ready
-document.addEventListener("DOMContentLoaded", () => {
-  window.comicAnimations = new ComicAnimationEngine();
-  window.comicAnimations.init();
-});
+window.scrapbook = new ScrapbookFX();
+document.addEventListener("DOMContentLoaded", () => window.scrapbook.init());

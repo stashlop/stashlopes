@@ -23,14 +23,16 @@ magazine-scrap collage, masking tape, sticky notes, polaroids and ballpoint dood
 - **Project Drishti**, **Archive & Arcade**, **Jarvis-MLX**, **Stash Pipeline**
 
 ## Features
+- Cut-out stop-motion reveals (pieces jump between hand-placed poses) and blinking live/REC indicators.
 - Torn paper edges generated per element (`clip-path`), ransom-note section labels and "pasted-in" scroll reveals (`js/animations.js`).
 - Stop-motion "boil" wobble on marker lettering via SVG turbulence filters.
 - Project notebook modal, project filters, sticky-note skills board and a ticket-stub journey.
 - Live GitHub stats and repos from the GitHub REST API (with offline fallback).
 - Little terminal (`help`, `whoami`, `internships`, `projects`, `sudo hire stash`…).
 - Postcard contact form that opens your mail app with the message filled in.
-- Outro end scene in the footer credits: an edited clip (warm film grade, grain, freeze-frame with
-  punch-in zoom) that plays once when scrolled into view and ends on a "the end?" card, with replay.
+- Outro end scene in the footer credits: real footage that blinks (flickers) into a stop-motion paper
+  cut-out of Stash on a scrapbook collage, with the title slapping in and comic-red blink frames. Plays
+  once when scrolled into view, then shows a "the end?" card with replay.
   Files live in `assets/video/` (`outro.webm`, `outro.mp4`, `outro-poster.jpg`).
 - Optional Web Audio sound effects; respects `prefers-reduced-motion` (no video autoplay).
 

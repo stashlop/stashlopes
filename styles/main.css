@@ -810,16 +810,37 @@ mark.hl {
   transform: rotate(var(--r, 0deg));
 }
 
-.js .paste:not(.revealed) {
-  opacity: 0;
-  transform: translateY(-34px) rotate(calc(var(--r, 0deg) + 6deg)) scale(1.06);
+.js .paste:not(.revealed) { opacity: 0; }
+
+/* Cut-out stop-motion: the piece jumps between a few hand-placed poses
+   (steps between keyframes) like paper animated frame by frame. "backwards"
+   fill so hover transforms still apply once it has landed. */
+.js .paste.revealed {
+  animation: cutout-in 0.5s steps(1, end) backwards;
+  transition: box-shadow 0.2s ease;
 }
 
-.js .paste {
-  transition:
-    opacity 0.45s ease,
-    transform 0.55s cubic-bezier(0.2, 1.35, 0.4, 1),
-    box-shadow 0.2s ease;
+@keyframes cutout-in {
+  0% { opacity: 0; transform: translate(-20px, -46px) rotate(calc(var(--r, 0deg) + 11deg)) scale(1.14); }
+  20% { opacity: 1; transform: translate(9px, -18px) rotate(calc(var(--r, 0deg) - 6deg)) scale(1.06); }
+  45% { transform: translate(-4px, 5px) rotate(calc(var(--r, 0deg) + 2.5deg)) scale(0.97); }
+  70% { transform: translate(2px, -2px) rotate(calc(var(--r, 0deg) - 1deg)) scale(1.01); }
+  100% { transform: rotate(var(--r, 0deg)); }
+}
+
+/* Blinking indicators */
+@keyframes blink-dot { 50% { opacity: 0; } }
+
+.live-dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: var(--marker-red);
+  box-shadow: 0 0 0 2px rgba(214, 38, 46, 0.25);
+  vertical-align: 1px;
+  animation: blink-dot 1s steps(1) infinite;
 }
 
 /* --------------------------------------------------------------------------
@@ -1884,6 +1905,48 @@ mark.hl {
 }
 
 .outro-film.is-ended .outro-endcard { opacity: 1; transform: none; }
+
+/* The end card flickers in (blink) and lands in cut-out poses */
+.outro-film.is-ended .outro-endcard-title { animation: endcard-in 0.9s steps(1, end) backwards, boil 0.36s 0.9s steps(1) infinite; }
+
+@keyframes endcard-in {
+  0% { opacity: 0; transform: rotate(8deg) scale(1.4); }
+  12% { opacity: 1; transform: rotate(-9deg) scale(1.15); }
+  24% { opacity: 0; }
+  34% { opacity: 1; transform: rotate(-2deg) scale(0.96); }
+  46% { opacity: 0; }
+  56% { opacity: 1; transform: rotate(-5deg) scale(1.02); }
+  100% { opacity: 1; transform: rotate(-4deg); }
+}
+
+/* REC badge blinks while the clip plays */
+.rec-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  padding: 2px 8px;
+  font-family: var(--font-type);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.rec-badge::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: #ff3b3b;
+  animation: blink-dot 0.8s steps(1) infinite;
+}
+
+.outro-film.is-playing .rec-badge { opacity: 1; }
 
 .outro-endcard-title {
   display: inline-block;

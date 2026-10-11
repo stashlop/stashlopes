@@ -29,7 +29,10 @@ magazine-scrap collage, masking tape, sticky notes, polaroids and ballpoint dood
 - Live GitHub stats and repos from the GitHub REST API (with offline fallback).
 - Little terminal (`help`, `whoami`, `internships`, `projects`, `sudo hire stash`…).
 - Postcard contact form that opens your mail app with the message filled in.
-- Optional Web Audio sound effects; respects `prefers-reduced-motion`.
+- Outro end scene in the footer credits: an edited clip (warm film grade, grain, freeze-frame with
+  punch-in zoom) that plays once when scrolled into view and ends on a "the end?" card, with replay.
+  Files live in `assets/video/` (`outro.webm`, `outro.mp4`, `outro-poster.jpg`).
+- Optional Web Audio sound effects; respects `prefers-reduced-motion` (no video autoplay).
 
 ## Credits
 Project photos are from [Unsplash](https://unsplash.com) (Unsplash License). Fonts: Permanent Marker,

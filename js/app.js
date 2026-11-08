@@ -366,6 +366,7 @@ class PortfolioApp {
     this.renderProjects();
     this.renderSkills();
     this.renderJourney();
+    this.setupTimeTravel();
     this.setupEventListeners();
     this.setupNavHighlight();
     this.setupOutro();
@@ -473,13 +474,129 @@ class PortfolioApp {
     route.innerHTML = JOURNEY_DATA.map((j, i) => `
       <li class="journey-stop${j.future ? " is-future" : ""}">
         <span class="journey-pin" aria-hidden="true">${j.icon}</span>
-        <div class="journey-card paste" style="--r:${i % 2 ? "1deg" : "-1deg"}">
+        <div class="journey-card" style="--r:${i % 2 ? "1deg" : "-1deg"}">
           <span class="journey-date">${escapeHTML(j.date)}</span>
           <h3>${escapeHTML(j.title)}</h3>
           <p>${escapeHTML(j.desc)}</p>
         </div>
       </li>
     `).join("");
+  }
+
+  // --- Journey: scroll-driven time travel ---
+  // The stop crossing the "now" line (60% down the screen) is the present.
+  // Stops above it are the past (aged), stops below it are the future (fogged).
+  setupTimeTravel() {
+    const machine = document.getElementById("time-machine");
+    const route = document.getElementById("journey-route");
+    const dial = document.getElementById("time-dial");
+    if (!machine || !route || !dial) return;
+
+    const stops = [...route.querySelectorAll(".journey-stop")];
+    if (!stops.length) return;
+    const pins = stops.map(s => s.querySelector(".journey-pin"));
+    const cards = stops.map(s => s.querySelector(".journey-card"));
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    const yearEl = dial.querySelector(".dial-year");
+    const label = dial.querySelector(".dial-label");
+    const count = dial.querySelector(".dial-count");
+    const dir = dial.querySelector(".dial-dir");
+    const bar = dial.querySelector(".dial-bar i");
+
+    const digitStrip = "0123456789".split("").map(d => `<span>${d}</span>`).join("");
+    yearEl.innerHTML = Array.from({ length: 4 }, () => `<span class="dial-col"><span class="dial-strip">${digitStrip}</span></span>`).join("");
+    const strips = [...yearEl.querySelectorAll(".dial-strip")];
+
+    cards.forEach(card => card.addEventListener("animationend", e => {
+      if (e.target === card) card.classList.remove("is-arriving");
+    }));
+
+    const pad = n => String(n).padStart(2, "0");
+    const restart = (el, cls) => { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); };
+
+    let active = null;
+    let shownYear = "";
+    let lastY = window.scrollY;
+    let lastDir = 1;
+    let warp = 0;
+    let queued = false;
+
+    const showYear = year => {
+      if (year === shownYear) return;
+      [...year].forEach((d, i) => strips[i] && strips[i].style.setProperty("--d", d));
+      if (shownYear) {
+        if (!reduceMotion.matches) restart(dial, "is-jump");
+        if (window.comicAudio) window.comicAudio.playWhoosh();
+      }
+      shownYear = year;
+    };
+
+    const setActive = idx => {
+      active = idx;
+      stops.forEach((stop, i) => {
+        stop.classList.toggle("is-past", i < idx);
+        stop.classList.toggle("is-now", i === idx);
+        stop.classList.toggle("is-ahead", i > idx);
+      });
+      if (idx >= 0 && !reduceMotion.matches) restart(cards[idx], "is-arriving");
+
+      const stop = JOURNEY_DATA[Math.max(idx, 0)];
+      const year = (stop.date.match(/\d{4}/) || ["0000"])[0];
+      const month = stop.date.replace(/\d{4}/, "").trim();
+      showYear(year);
+      label.textContent = idx < 0 ? "departing from"
+        : stop.future ? "arriving · the future"
+        : month ? `arriving · ${month}` : "now arriving";
+      count.textContent = `stop ${pad(idx + 1)} / ${pad(stops.length)}`;
+    };
+
+    const tick = () => {
+      queued = false;
+      const y = window.scrollY;
+      const dy = y - lastY;
+      lastY = y;
+
+      const viewH = window.innerHeight;
+      const nowLine = viewH * 0.6;
+      const box = route.getBoundingClientRect();
+      const travelled = Math.min(Math.max(nowLine - box.top, 0), box.height);
+      machine.style.setProperty("--progress", `${travelled.toFixed(1)}px`);
+      machine.classList.toggle("is-travelling", travelled > 0 && travelled < box.height);
+      bar.style.setProperty("--p", box.height ? (travelled / box.height).toFixed(4) : 0);
+
+      let idx = -1;
+      pins.forEach((pin, i) => {
+        const r = pin.getBoundingClientRect();
+        if (r.top + r.height / 2 <= nowLine) idx = i;
+      });
+      if (idx !== active) setActive(idx);
+
+      if (dy && Math.sign(dy) !== lastDir) {
+        lastDir = Math.sign(dy);
+        dir.textContent = lastDir > 0 ? "▶▶ forward" : "◀◀ rewind";
+      }
+
+      // Warp streaks scale with scroll speed, only while the timeline is on screen
+      const mBox = machine.getBoundingClientRect();
+      const onScreen = mBox.top < viewH && mBox.bottom > 0;
+      const target = onScreen && !reduceMotion.matches ? Math.abs(dy) * 0.004 : 0;
+      warp = Math.min(1, warp * 0.86 + target);
+      if (warp < 0.01) warp = 0;
+      machine.style.setProperty("--warp", warp.toFixed(3));
+      if (warp > 0) schedule();
+    };
+
+    const schedule = () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(tick);
+    };
+
+    machine.classList.add("is-live");
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    tick();
   }
 
   // --- Project notebook modal ---

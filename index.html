@@ -283,12 +283,31 @@
         <div class="notebook-strip head-strip torn" data-tear="all">
           <h2 class="marker-title boil" id="journey-title">THE JOURNEY</h2>
         </div>
-        <p class="section-sub">every stop so far</p>
+        <p class="section-sub">every stop so far, scroll to travel through time</p>
       </header>
 
-      <ol class="journey-route" id="journey-route">
-        <!-- Rendered via JS -->
-      </ol>
+      <div class="time-machine" id="time-machine">
+        <div class="time-warp" aria-hidden="true"></div>
+        <span class="time-spark" aria-hidden="true"></span>
+
+        <ol class="journey-route" id="journey-route">
+          <!-- Rendered via JS -->
+        </ol>
+
+        <!-- Year dial: rolls through the years as you scroll (decorative) -->
+        <div class="time-dial" id="time-dial" aria-hidden="true">
+          <span class="dial-light"></span>
+          <div class="dial-main">
+            <span class="dial-label">departing from</span>
+            <span class="dial-year"></span>
+          </div>
+          <div class="dial-meta">
+            <span class="dial-count">stop 00 / 00</span>
+            <span class="dial-dir">&#9654;&#9654; forward</span>
+          </div>
+          <span class="dial-bar"><i></i></span>
+        </div>
+      </div>
     </section>
 
     <!-- =======================================================================

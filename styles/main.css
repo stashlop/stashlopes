@@ -1171,8 +1171,16 @@ mark.hl {
 .skill-note .skill-emoji { position: absolute; right: 14px; bottom: 8px; font-size: 1.8rem; opacity: 0.8; }
 
 /* --------------------------------------------------------------------------
-   Journey: tickets along a dashed route
+   Journey: a time machine. Scrolling travels through the years: the route
+   lights up behind you, a dial rolls the year, the past fades to sepia and
+   the future waits in a blur until you arrive.
    -------------------------------------------------------------------------- */
+.time-machine {
+  position: relative;
+  --progress: 0px;
+  --warp: 0;
+}
+
 .journey-route {
   position: relative;
   margin: 0;
@@ -1180,14 +1188,65 @@ mark.hl {
   list-style: none;
 }
 
-.journey-route::before {
+.journey-route::before,
+.journey-route::after {
   content: "";
   position: absolute;
   top: 0;
-  bottom: 0;
   left: 50%;
-  border-left: 3px dashed rgba(247, 242, 228, 0.5);
   transform: translateX(-50%);
+}
+
+.journey-route::before {
+  bottom: 0;
+  border-left: 3px dashed rgba(247, 242, 228, 0.5);
+}
+
+/* The stretch of route already travelled */
+.journey-route::after {
+  width: 5px;
+  height: var(--progress);
+  border-radius: 3px;
+  background: linear-gradient(180deg, var(--marker-gold), var(--marker-red));
+  box-shadow: 0 0 10px rgba(214, 38, 46, 0.8), 0 0 26px rgba(244, 184, 51, 0.35);
+  z-index: 1;
+}
+
+/* The spark at the head of the travelled route */
+.time-spark {
+  position: absolute;
+  top: var(--progress);
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  margin: -12px 0 0 -12px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 0 18%, var(--marker-gold) 34%, rgba(214, 38, 46, 0.6) 58%, transparent 72%);
+  opacity: 0;
+  z-index: 3;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  animation: spark-flicker 0.24s steps(2, end) infinite;
+}
+
+.time-machine.is-travelling .time-spark { opacity: 1; }
+
+@keyframes spark-flicker { 50% { transform: scale(1.35) rotate(45deg); } }
+
+/* Warp streaks: only show while you are actually moving through time */
+.time-warp {
+  position: fixed;
+  inset: -10%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: calc(var(--warp) * 0.6);
+  transform: scale(calc(1 + var(--warp) * 0.25));
+  background:
+    repeating-conic-gradient(from 0deg at 50% 50%, transparent 0deg 4deg, rgba(247, 242, 228, 0.5) 4deg 4.25deg, transparent 4.25deg 9deg),
+    repeating-conic-gradient(from 2deg at 50% 50%, transparent 0deg 6deg, rgba(244, 184, 51, 0.45) 6deg 6.3deg, transparent 6.3deg 13deg),
+    repeating-conic-gradient(from 5deg at 50% 50%, transparent 0deg 10deg, rgba(214, 38, 46, 0.4) 10deg 10.4deg, transparent 10.4deg 17deg);
+  -webkit-mask: radial-gradient(circle at 50% 50%, transparent 0 22%, #000 78%);
+  mask: radial-gradient(circle at 50% 50%, transparent 0 22%, #000 78%);
 }
 
 .journey-stop {
@@ -1217,6 +1276,7 @@ mark.hl {
   border: 3px solid var(--paper);
   font-size: 0.9rem;
   z-index: 2;
+  transition: background-color 0.4s ease, border-color 0.4s ease, opacity 0.4s ease, transform 0.4s cubic-bezier(0.3, 1.6, 0.5, 1);
 }
 
 .journey-stop:nth-child(even) .journey-pin { right: auto; left: -15px; }
@@ -1238,6 +1298,16 @@ mark.hl {
   left: 0;
   width: 10px;
   background: radial-gradient(circle at 0 50%, var(--board) 5px, transparent 5.5px) 0 0 / 10px 16px repeat-y;
+}
+
+/* Scan lines that flash across a card as it lands in the present */
+.journey-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgba(58, 200, 230, 0.22) 0 2px, transparent 2px 5px);
 }
 
 .journey-date {
@@ -1265,6 +1335,179 @@ mark.hl {
 .journey-stop.is-future .journey-card { background: transparent; color: var(--paper); border: 2px dashed rgba(247, 242, 228, 0.6); box-shadow: none; }
 .journey-stop.is-future .journey-card::before { display: none; }
 .journey-stop.is-future .journey-card h3 { color: var(--marker-gold); }
+
+/* --- Time states (only once the script is driving the timeline) --- */
+.time-machine.is-live .journey-card {
+  transition: opacity 0.6s ease, filter 0.6s ease, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
+}
+
+/* Not there yet: out of focus, waiting in the fog */
+.time-machine.is-live .is-ahead .journey-card {
+  opacity: 0.22;
+  filter: blur(3px) grayscale(1);
+  transform: translateY(36px) rotate(var(--r, 0deg)) scale(0.9);
+}
+
+.time-machine.is-live .is-ahead .journey-pin {
+  background: var(--board);
+  border-style: dashed;
+  border-color: rgba(247, 242, 228, 0.45);
+  opacity: 0.6;
+  filter: grayscale(1);
+}
+
+/* Already been: aged like an old photo */
+.time-machine.is-live .is-past .journey-card {
+  opacity: 0.86;
+  filter: sepia(0.6) saturate(0.85) brightness(0.92);
+}
+
+.time-machine.is-live .is-past .journey-pin { background: var(--marker-red-dark); }
+
+/* The present */
+.time-machine.is-live .is-now .journey-card {
+  transform: rotate(var(--r, 0deg)) scale(1.04);
+  box-shadow: 0 0 0 3px var(--marker-gold), 0 0 30px rgba(244, 184, 51, 0.35), var(--shadow-lift);
+}
+
+.time-machine.is-live .is-now .journey-pin {
+  transform: scale(1.3);
+  border-color: var(--marker-gold);
+  animation: pin-pulse 1.4s ease-out infinite;
+}
+
+@keyframes pin-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(244, 184, 51, 0.75); }
+  100% { box-shadow: 0 0 0 18px rgba(244, 184, 51, 0); }
+}
+
+/* Arrival glitch: the card tears through the rift in slices */
+.journey-card.is-arriving { animation: rift-in 0.5s steps(1, end); }
+.journey-card.is-arriving::after { animation: rift-scan 0.5s ease-out; }
+
+@keyframes rift-in {
+  0% { clip-path: inset(0 0 82% 0); translate: -10px 0; text-shadow: -3px 0 rgba(214, 38, 46, 0.9), 3px 0 rgba(58, 200, 230, 0.9); }
+  15% { clip-path: inset(55% 0 12% 0); translate: 8px 0; }
+  30% { clip-path: inset(10% 0 45% 0); translate: -5px 0; }
+  45% { clip-path: inset(0 0 25% 0); translate: 4px 0; }
+  60% { clip-path: inset(30% 0 0 0); translate: -2px 0; text-shadow: -2px 0 rgba(214, 38, 46, 0.7), 2px 0 rgba(58, 200, 230, 0.7); }
+  75% { clip-path: inset(0); translate: 1px 0; text-shadow: -1px 0 rgba(214, 38, 46, 0.5), 1px 0 rgba(58, 200, 230, 0.5); }
+  100% { clip-path: none; translate: 0 0; text-shadow: none; }
+}
+
+@keyframes rift-scan {
+  0% { opacity: 1; transform: translateY(-8px); }
+  100% { opacity: 0; transform: translateY(8px); }
+}
+
+/* --- The time dial: pinned to the bottom of the screen while you travel --- */
+.time-dial {
+  display: none;
+  position: sticky;
+  bottom: 18px;
+  z-index: 5;
+  align-items: center;
+  gap: 16px;
+  width: fit-content;
+  max-width: 100%;
+  margin: 12px auto 0;
+  padding: 10px 20px 16px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-type);
+  border: 2px solid rgba(247, 242, 228, 0.16);
+  box-shadow: var(--shadow-lift), inset 0 0 0 4px var(--ink), inset 0 0 0 5px rgba(244, 184, 51, 0.35);
+  transform: rotate(-0.6deg);
+}
+
+.time-machine.is-live .time-dial { display: flex; }
+
+.time-dial.is-jump { animation: dial-jolt 0.36s steps(3, end); }
+
+@keyframes dial-jolt {
+  0% { translate: -4px 1px; filter: hue-rotate(60deg) brightness(1.4); }
+  50% { translate: 3px -1px; }
+  100% { translate: 0 0; filter: none; }
+}
+
+.dial-light {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--marker-red);
+  box-shadow: 0 0 10px var(--marker-red);
+  animation: blink-dot 1s steps(1, end) infinite;
+}
+
+.dial-main,
+.dial-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dial-label,
+.dial-meta {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.dial-label { color: rgba(247, 242, 228, 0.7); }
+.dial-count { color: var(--paper); }
+.dial-dir { color: var(--marker-red); }
+
+.dial-year {
+  display: flex;
+  gap: 4px;
+  font-size: clamp(1.9rem, 4vw, 2.6rem);
+  line-height: 1;
+}
+
+.dial-col {
+  display: block;
+  width: 0.72em;
+  height: 1.2em;
+  overflow: hidden;
+  text-align: center;
+  border-radius: 3px;
+  background: #0b0a09;
+  color: var(--marker-gold);
+  text-shadow: 0 0 8px rgba(244, 184, 51, 0.65);
+  box-shadow: inset 0 7px 8px rgba(0, 0, 0, 0.75), inset 0 -7px 8px rgba(0, 0, 0, 0.75);
+}
+
+/* Each digit is a strip of 0–9 that rolls like an odometer */
+.dial-strip {
+  display: block;
+  transform: translateY(calc(var(--d, 0) * -1.2em));
+  transition: transform 0.7s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+
+.dial-col:nth-child(1) .dial-strip { transition-delay: 0.18s; }
+.dial-col:nth-child(2) .dial-strip { transition-delay: 0.12s; }
+.dial-col:nth-child(3) .dial-strip { transition-delay: 0.06s; }
+
+.dial-strip span { display: block; height: 1.2em; line-height: 1.2em; }
+
+.dial-bar {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 7px;
+  height: 3px;
+  background: rgba(247, 242, 228, 0.15);
+}
+
+.dial-bar i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--marker-gold), var(--marker-red));
+  transform-origin: left;
+  transform: scaleX(var(--p, 0));
+}
 
 /* --------------------------------------------------------------------------
    GitHub
@@ -2094,7 +2337,11 @@ mark.hl {
 
   .project-wall { grid-template-columns: 1fr; }
 
-  .journey-route::before { left: 14px; }
+  .journey-route::before,
+  .journey-route::after,
+  .time-spark { left: 14px; }
+  .time-dial { gap: 12px; padding: 8px 14px 14px; }
+  .dial-meta { font-size: 0.64rem; }
   .journey-stop,
   .journey-stop:nth-child(even) { width: 100%; margin-left: 0; justify-content: flex-start; padding: 0 0 34px 44px; }
   .journey-pin,
@@ -2142,4 +2389,7 @@ mark.hl {
   .scrap { opacity: 0.92; animation: none; }
 
   .js .paste:not(.revealed) { opacity: 1; transform: rotate(var(--r, 0deg)); }
+
+  .time-warp { display: none; }
+  .time-machine.is-live .is-ahead .journey-card { opacity: 1; filter: none; transform: rotate(var(--r, 0deg)); }
 }

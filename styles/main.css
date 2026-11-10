@@ -1337,6 +1337,10 @@ mark.hl {
 
 .project-note p { margin: 0 0 var(--sp-3); }
 
+/* Beside the tall featured print, a note keeps its own height instead of
+   stretching into a mostly empty sheet */
+.project-card.is-featured:not(.is-hidden) + .project-card .project-note { flex: 0 0 auto; }
+
 .project-stack {
   font-family: var(--font-type);
   font-size: var(--fs-label);
@@ -2243,16 +2247,6 @@ mark.hl {
   -webkit-text-stroke: 0.6px var(--ink);
 }
 
-.spread-arch {
-  display: block;
-  margin-bottom: 30px;
-  padding: 0 10px;
-  font-family: var(--font-type);
-  font-size: 0.9rem;
-  line-height: 30px;
-  background: rgba(166, 216, 240, 0.35);
-}
-
 .spread-stack { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px; }
 
 .spread-links { display: grid; gap: 12px; }
@@ -2652,7 +2646,7 @@ mark.hl {
   .logo-name { display: none; }
   .sfx-toggle { font-size: 0.8rem; padding: 3px 10px; }
 
-  .hero { padding-top: 110px; padding-bottom: 110px; }
+  .hero { padding-top: 110px; padding-bottom: 130px; }
   .hero-inner { gap: var(--sp-6); }
   .hero-art { padding-bottom: 0; }
   .hero-cta { gap: var(--sp-3); }

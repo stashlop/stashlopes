@@ -16,12 +16,11 @@ const EXPERIENCE_DATA = [
     stampMain: "2026",
     current: true,
     bullets: [
-      "Design websites and product interfaces in Figma for international clients across the USA, UAE and other markets.",
-      "Take client briefs from research and wireframes to high-fidelity UI and interactive prototypes.",
-      "Deliver for healthcare, luxury car-rental, marketing-agency and creative-portfolio brands, adapting each to its audience.",
-      "Hand off developer-ready designs, using full-stack experience to keep them practical to build."
+      "Design websites and product UI for clients in the USA, UAE and other markets.",
+      "Take each brief from research and wireframes to developer-ready handoff.",
+      "Sectors so far: healthcare, luxury car rental, marketing agencies, creative portfolios."
     ],
-    tags: ["Figma", "Wireframing", "Prototyping", "Design handoff", "Client work"]
+    tags: ["Figma", "Prototyping", "Client work"]
   },
   {
     role: "Software Development Intern",
@@ -32,11 +31,10 @@ const EXPERIENCE_DATA = [
     stampMain: "2025",
     current: false,
     bullets: [
-      "Built and maintained production web applications across front-end and back-end.",
-      "Designed, tested and implemented features against real product requirements with the team.",
-      "Improved UI responsiveness and usability; contributed to debugging and performance work."
+      "Built and maintained production web apps, front-end and back-end.",
+      "Shipped features to real product requirements; improved UI responsiveness and performance."
     ],
-    tags: ["Full-stack", "Production apps", "Testing", "Performance"]
+    tags: ["Full-stack", "Testing", "Debugging"]
   },
   {
     role: "UI/UX Designer",
@@ -47,13 +45,14 @@ const EXPERIENCE_DATA = [
     stampMain: "2025",
     current: false,
     bullets: [
-      "Designed interfaces, interaction flows and prototypes that guided front-end implementation."
+      "Designed the interfaces, flows and prototypes the front-end was built from."
     ],
-    tags: ["Interaction design", "Prototypes", "UI"]
+    tags: ["UI", "Interaction design"]
   }
 ];
 
 // --- Projects (photos: Unsplash) ---
+// Card: name, one line, stack, links. Notebook: the idea in a sentence + what I built.
 const PROJECTS_DATA = [
   {
     id: "herobid",
@@ -66,22 +65,16 @@ const PROJECTS_DATA = [
     caption: "HeroBid",
     image: "assets/images/projects/herobid.jpg",
     imageAlt: "Spider-Man action figure against a dark background",
-    blurb: "Bid on a 110-hero roster, build 5-hero squads and fight in a deterministic battle engine — with anti-snipe bidding and ELO matchmaking.",
     stack: ["Flutter", "Node.js", "TypeScript", "Firebase", "AR/VR"],
     githubUrl: GITHUB_PROFILE,
     liveUrl: null,
-    notes: {
-      status: "In active development",
-      overview: "A real-time multiplayer auction and battle arena. Players bid against each other for heroes from a 110-hero roster, assemble 5-hero squads, then send them into a deterministic, server-authoritative battle engine.",
-      features: [
-        "Server-authoritative real-time bidding with anti-snipe timer extensions.",
-        "110-hero roster and 5-hero squad building.",
-        "Deterministic battle engine so every client sees the same fight.",
-        "ELO-based matchmaking.",
-        "AR/VR hero viewing."
-      ],
-      architecture: "Flutter client ➔ Node/TypeScript game server (authoritative state) ➔ Firebase"
-    }
+    status: "In development",
+    idea: "Bid for heroes from a 110-hero roster, build a 5-hero squad, then fight.",
+    built: [
+      "Server-authoritative bidding with anti-snipe timer extensions.",
+      "Deterministic battle engine: every client sees the same fight.",
+      "ELO matchmaking and AR/VR hero viewing."
+    ]
   },
   {
     id: "cyberqore",
@@ -92,21 +85,16 @@ const PROJECTS_DATA = [
     caption: "CyberQore",
     image: "assets/images/projects/cyberqore.jpg",
     imageAlt: "Glowing blue circuit-board pattern",
-    blurb: "Turns raw security alerts into cited, explainable investigations with trust scoring.",
     stack: ["Python", "TypeScript", "Multi-Agent AI", "RAG", "LLMs"],
     githubUrl: GITHUB_PROFILE,
     liveUrl: null,
-    notes: {
-      status: "Built",
-      overview: "A security-operations copilot that takes raw alerts and produces investigations an analyst can actually trust: every conclusion is grounded in retrieved evidence, cited, and scored.",
-      features: [
-        "Multi-agent pipeline that triages, investigates and summarises alerts.",
-        "Retrieval-grounded answers with citations back to source evidence.",
-        "Trust scoring so analysts know how much weight to give each finding.",
-        "Explainable output instead of a black-box verdict."
-      ],
-      architecture: "Alert ingest ➔ agent orchestration (Python) ➔ retrieval over evidence ➔ cited investigation + trust score ➔ TypeScript UI"
-    }
+    status: "Built",
+    idea: "Turns raw security alerts into investigations an analyst can check.",
+    built: [
+      "Agent pipeline that triages, investigates and summarises alerts.",
+      "Every answer cited back to retrieved evidence.",
+      "A trust score on each finding."
+    ]
   },
   {
     id: "karigar",
@@ -117,21 +105,16 @@ const PROJECTS_DATA = [
     caption: "Karigar",
     image: "assets/images/projects/karigar.jpg",
     imageAlt: "Handmade ceramic cups on a shelf",
-    blurb: "AI product storytelling, multilingual voice narration and an interactive heritage map for artisans.",
     stack: ["Gemini", "Vertex AI", "Cloud Run", "Python", "Flask", "Firestore", "Maps API"],
     githubUrl: "https://github.com/stashlop/Karigar",
     liveUrl: "https://karigar-7ngk.onrender.com",
-    notes: {
-      status: "Deployed",
-      overview: "Built for the Google GenAI Exchange Hackathon. Karigar helps traditional Indian artisans sell online by turning photos of their craft into compelling product stories, voice narrations in their own language, and a map of craft clusters.",
-      features: [
-        "AI product storytelling with Gemini on Vertex AI.",
-        "Multilingual voice narration with Cloud Text-to-Speech.",
-        "Interactive heritage map of artisan hubs.",
-        "Containerised and deployed on Cloud Run."
-      ],
-      architecture: "Flask ➔ Vertex AI / Gemini ➔ Cloud Text-to-Speech ➔ Google Maps ➔ Firestore ➔ Cloud Run"
-    }
+    status: "Deployed",
+    idea: "Helps artisans sell online, starting from a photo of their craft.",
+    built: [
+      "Product stories written by Gemini.",
+      "Voice narration in the artisan's own language.",
+      "An interactive map of craft clusters."
+    ]
   },
   {
     id: "examgen",
@@ -142,21 +125,16 @@ const PROJECTS_DATA = [
     caption: "ExamGEN",
     image: "assets/images/projects/examgen.jpg",
     imageAlt: "Student writing on paper with a pen",
-    blurb: "Admin & teacher dashboards, a question bank and ML question classification to build papers automatically.",
     stack: ["Next.js", "FastAPI", "Prisma", "Python", "ML"],
     githubUrl: GITHUB_PROFILE,
     liveUrl: null,
-    notes: {
-      status: "Built",
-      overview: "Setting exam papers by hand is slow and inconsistent. ExamGEN keeps a structured question bank, classifies questions with ML, and generates balanced papers on demand.",
-      features: [
-        "Admin and teacher dashboards.",
-        "Central question bank.",
-        "ML-based question classification.",
-        "Automated paper generation."
-      ],
-      architecture: "Next.js dashboards ➔ FastAPI service ➔ Prisma ORM ➔ database; ML classifier in Python"
-    }
+    status: "Built",
+    idea: "Builds balanced exam papers from a structured question bank.",
+    built: [
+      "Admin and teacher dashboards.",
+      "A classifier that tags each question.",
+      "On-demand paper generation."
+    ]
   },
   {
     id: "vendorconnect",
@@ -167,20 +145,16 @@ const PROJECTS_DATA = [
     caption: "VendorConnect",
     image: "assets/images/projects/vendorconnect.jpg",
     imageAlt: "Plate of samosas with green chutney",
-    blurb: "Verified suppliers, group ordering and a multilingual voice chatbot for low-literacy users.",
     stack: ["Flask", "Python", "Voice chatbot", "Render"],
     githubUrl: GITHUB_PROFILE,
     liveUrl: null,
-    notes: {
-      status: "Deployed on Render",
-      overview: "Street-food vendors often buy raw materials from unverified sources at poor prices. VendorConnect connects them with verified suppliers and lets them pool orders — with a voice-first interface so it works for low-literacy users.",
-      features: [
-        "Verified supplier directory.",
-        "Group ordering to unlock better prices.",
-        "Multilingual voice chatbot for low-literacy users."
-      ],
-      architecture: "Flask web app ➔ supplier & order data ➔ voice chatbot ➔ deployed on Render"
-    }
+    status: "Deployed",
+    idea: "Connects vendors with verified suppliers and lets them pool orders.",
+    built: [
+      "Verified supplier directory.",
+      "Group ordering for better prices.",
+      "Multilingual voice chatbot for low-literacy users."
+    ]
   },
   {
     id: "itihaas",
@@ -191,22 +165,16 @@ const PROJECTS_DATA = [
     caption: "Itihaas",
     image: "assets/images/projects/itihaas.jpg",
     imageAlt: "The Taj Mahal framed by a carved archway",
-    blurb: "Monument slot booking, certified guides and an NLP travel assistant — won 1st place at Colloquium 2025.",
     stack: ["Python", "Flask", "SQLite", "SQLAlchemy", "spaCy", "Maps API"],
     githubUrl: "https://github.com/stashlop/Itihaas",
     liveUrl: null,
-    notes: {
-      status: "1st Place — Colloquium 2025",
-      overview: "Tourists visiting Indian monuments deal with fragmented ticketing, unverified guides and little on-site context. Itihaas puts bookings, guides and a cultural assistant in one place.",
-      features: [
-        "Slot-based monument ticketing.",
-        "Certified local guide booking with reviews.",
-        "spaCy NLP chatbot for history, etiquette and travel tips.",
-        "Itihaas Coins loyalty rewards.",
-        "WhatsApp & email booking confirmations."
-      ],
-      architecture: "Flask ➔ SQLAlchemy ➔ SQLite ➔ spaCy intent classification ➔ Google Maps ➔ Jinja2 UI"
-    }
+    status: "Built",
+    idea: "Monument tickets, certified guides and a travel assistant in one place.",
+    built: [
+      "Slot-based ticketing and guide booking with reviews.",
+      "A chatbot for history, etiquette and travel tips.",
+      "Loyalty coins, plus WhatsApp and email confirmations."
+    ]
   },
   {
     id: "drishti",
@@ -217,21 +185,16 @@ const PROJECTS_DATA = [
     caption: "Drishti",
     image: "assets/images/projects/drishti.jpg",
     imageAlt: "Grid of CCTV security cameras on a wall",
-    blurb: "Fire & smoke detection, face verification and instant geo-tagged alerts to a live dashboard.",
     stack: ["Python", "OpenCV", "YOLOv8", "TensorFlow", "Firebase", "Flask"],
     githubUrl: GITHUB_PROFILE,
     liveUrl: null,
-    notes: {
-      status: "Prototyped",
-      overview: "Passive CCTV relies on someone watching the screen. Drishti watches for hazards automatically and pushes geo-tagged alerts to a central dashboard the moment something happens.",
-      features: [
-        "YOLOv8 fire & smoke detection.",
-        "Face verification for authorised vs unknown people.",
-        "GPS-stamped incident alerts.",
-        "Real-time Firebase dashboard with snapshots."
-      ],
-      architecture: "Camera stream ➔ OpenCV ➔ YOLOv8 + face embeddings ➔ Firebase Realtime DB ➔ web dashboard"
-    }
+    status: "Prototyped",
+    idea: "Watches CCTV for hazards and alerts a live dashboard the moment one appears.",
+    built: [
+      "Fire and smoke detection.",
+      "Face verification for known vs unknown people.",
+      "GPS-stamped alerts with snapshots."
+    ]
   },
   {
     id: "arcade",
@@ -242,21 +205,16 @@ const PROJECTS_DATA = [
     caption: "Archive & Arcade",
     image: "assets/images/projects/arcade.jpg",
     imageAlt: "Neon-lit arcade with rows of game machines",
-    blurb: "Book & game rentals, café slot booking with conflict checks and an admin revenue dashboard.",
     stack: ["Node.js", "Express", "JavaScript", "Nunjucks", "REST APIs"],
     githubUrl: "https://github.com/stashlop/Archive-Arcade-mini-project",
     liveUrl: "https://archive-arcade-mini-project.vercel.app",
-    notes: {
-      status: "Live",
-      overview: "A full-stack site for a book-and-games café: browse and rent from the archive, buy games, reserve café tables, and give admins a revenue dashboard.",
-      features: [
-        "Searchable archive with rent / buy flows.",
-        "Café slot booking with collision detection.",
-        "Session-based cart and checkout.",
-        "Admin revenue dashboard with CSV export."
-      ],
-      architecture: "Node.js ➔ Express ➔ express-session ➔ Nunjucks templates ➔ JSON persistence ➔ Vercel"
-    }
+    status: "Live",
+    idea: "A book-and-games café site: rent, buy and reserve a table.",
+    built: [
+      "Searchable archive with rent and buy flows.",
+      "Table booking with clash detection.",
+      "Cart, checkout and an admin revenue dashboard with CSV export."
+    ]
   },
   {
     id: "jarvis",
@@ -267,20 +225,15 @@ const PROJECTS_DATA = [
     caption: "Jarvis-MLX",
     image: "assets/images/projects/jarvis.jpg",
     imageAlt: "MacBook lit with purple light",
-    blurb: "A private, fully offline assistant running quantised models with Apple MLX.",
     stack: ["Python", "Apple MLX", "Local LLMs", "Quantization"],
     githubUrl: "https://github.com/stashlop/jarvis-mlx",
     liveUrl: null,
-    notes: {
-      status: "Experimental",
-      overview: "Cloud assistants need a connection and see your data. Jarvis-MLX runs quantised language models locally on Apple Silicon so everything stays on the machine.",
-      features: [
-        "100% local inference.",
-        "4-bit quantised models on unified memory.",
-        "Automates local developer workflows."
-      ],
-      architecture: "Apple MLX ➔ quantised weights ➔ unified memory ➔ Python CLI"
-    }
+    status: "Experimental",
+    idea: "A private assistant that never leaves the machine.",
+    built: [
+      "Fully local inference on 4-bit quantised models.",
+      "Automations for developer workflows."
+    ]
   },
   {
     id: "pipeline",
@@ -291,21 +244,16 @@ const PROJECTS_DATA = [
     caption: "Stash Pipeline",
     image: "assets/images/projects/pipeline.jpg",
     imageAlt: "Server rack with network cables",
-    blurb: "Declarative Jenkins pipelines that build, test and ship Docker images on every push.",
     stack: ["Jenkins", "Docker", "Bash", "Maven", "Git", "Linux"],
     githubUrl: "https://github.com/stashlop/jenkins-pipeline-tutorial",
     liveUrl: null,
-    notes: {
-      status: "Working pipeline",
-      overview: "Manual build-and-deploy is slow and error-prone. These pipelines run the whole cycle automatically from a GitHub webhook.",
-      features: [
-        "Multi-stage declarative Jenkinsfiles.",
-        "Containerised, reproducible builds.",
-        "Test gates that stop bad builds.",
-        "Shell scripts for environment setup."
-      ],
-      architecture: "GitHub webhook ➔ Jenkins ➔ Maven build & test ➔ Docker build & push ➔ deploy"
-    }
+    status: "Working",
+    idea: "Builds, tests and ships a Docker image on every push.",
+    built: [
+      "Multi-stage declarative Jenkinsfiles.",
+      "Test gates that stop bad builds.",
+      "Setup scripts for the build environment."
+    ]
   }
 ];
 
@@ -321,15 +269,15 @@ const SKILLS_DATA = [
 
 // --- Journey ---
 const JOURNEY_DATA = [
-  { date: "2023", icon: "🎓", title: "Started B.E. in Information Technology", desc: "Joined St. Francis Institute of Technology (University of Mumbai)." },
-  { date: "2024", icon: "🏗️", title: "First full-stack builds", desc: "Shipped Archive & Arcade and started building with Node.js and Flask." },
-  { date: "MAR 2025", icon: "⚡", title: "Software Development Intern — Voltic Amp", desc: "Eight months building and maintaining production web apps in Mumbai." },
-  { date: "2025", icon: "✏️", title: "UI/UX Designer — VEARME", desc: "Remote design work: interfaces, flows and prototypes." },
-  { date: "2025", icon: "🏆", title: "1st Place, Colloquium 2025 & SFIT Hackathon win", desc: "Itihaas took first place; also won the SFIT IT Department Hackathon." },
-  { date: "2025", icon: "✨", title: "Google GenAI Exchange Hackathon", desc: "Built Karigar with Gemini, Vertex AI and Cloud Run." },
-  { date: "2026", icon: "🌍", title: "UI/UX & Full-Stack Design Intern — Horizon View", desc: "Designing for international clients in the USA, UAE and more." },
-  { date: "2026", icon: "🕸️", title: "HeroBid & CyberQore", desc: "Real-time multiplayer game systems and multi-agent AI." },
-  { date: "2027", icon: "🎓", title: "Graduation (expected)", desc: "B.E. Information Technology — next stop: wherever the work is.", future: true }
+  { date: "2023", icon: "🎓", title: "Started B.E. Information Technology", desc: "St. Francis Institute of Technology." },
+  { date: "2024", icon: "🏗️", title: "First full-stack builds", desc: "Archive & Arcade, in Node.js and Flask." },
+  { date: "MAR 2025", icon: "⚡", title: "Intern — Voltic Amp", desc: "Eight months on production web apps." },
+  { date: "2025", icon: "✏️", title: "UI/UX Designer — VEARME", desc: "Remote interface and prototype work." },
+  { date: "2025", icon: "🏆", title: "Two wins", desc: "Colloquium 2025 with Itihaas, then the SFIT IT Hackathon." },
+  { date: "2025", icon: "✨", title: "Google GenAI Exchange", desc: "Built Karigar." },
+  { date: "2026", icon: "🌍", title: "Design Intern — Horizon View", desc: "International client work." },
+  { date: "2026", icon: "🕸️", title: "HeroBid & CyberQore", desc: "Real-time multiplayer and multi-agent AI." },
+  { date: "2027", icon: "🎓", title: "Graduation (expected)", desc: "Next stop: wherever the work is.", future: true }
 ];
 
 const SFX_WORDS = ["THWIP!", "SHIP IT!", "DEPLOY!", "COMMIT!", "MERGED!", "NICE!", "POW!", "FIXED!"];
@@ -423,7 +371,7 @@ class PortfolioApp {
           <figcaption>${escapeHTML(p.caption)}</figcaption>
         </figure>
         <div class="project-note reveal">
-          <p><strong>${escapeHTML(p.subtitle)}.</strong> ${escapeHTML(p.blurb)}</p>
+          <p><strong>${escapeHTML(p.subtitle)}</strong></p>
           <p class="project-stack">${p.stack.map(escapeHTML).join(" · ")}</p>
           <div class="project-actions">
             <button type="button" class="tape-btn btn-red open-notes" data-id="${p.id}">read the notes</button>
@@ -625,7 +573,6 @@ class PortfolioApp {
     this.lastFocus = document.activeElement;
     if (window.comicAudio) window.comicAudio.playWhoosh();
 
-    const n = p.notes;
     content.innerHTML = `
       <div class="spread-grid">
         <div class="spread-left">
@@ -634,7 +581,7 @@ class PortfolioApp {
             <span class="photo"><img src="${p.image}" alt="${escapeHTML(p.imageAlt)}" /></span>
             <figcaption>${escapeHTML(p.caption)}</figcaption>
           </figure>
-          <div class="spread-status"><span class="stamp stamp-red">${escapeHTML(n.status)}</span></div>
+          <div class="spread-status"><span class="stamp stamp-red">${escapeHTML(p.status)}</span></div>
           <div class="spread-stack">${p.stack.map(t => `<span class="washi">${escapeHTML(t)}</span>`).join("")}</div>
           <div class="spread-links">
             ${p.liveUrl ? `<a href="${p.liveUrl}" target="_blank" rel="noopener noreferrer" class="tape-btn btn-red w-full">open live demo ↗</a>` : ""}
@@ -647,12 +594,10 @@ class PortfolioApp {
           <p class="spread-sub">${escapeHTML(p.subtitle)}</p>
 
           <h4>the idea</h4>
-          <p>${escapeHTML(n.overview)}</p>
+          <p>${escapeHTML(p.idea)}</p>
 
-          <h4>what it does</h4>
-          <ul>${n.features.map(f => `<li>${escapeHTML(f)}</li>`).join("")}</ul>
-
-          ${n.architecture ? `<h4>how it fits together</h4><code class="spread-arch">${escapeHTML(n.architecture)}</code>` : ""}
+          <h4>what I built</h4>
+          <ul>${p.built.map(f => `<li>${escapeHTML(f)}</li>`).join("")}</ul>
         </div>
       </div>
     `;
@@ -882,10 +827,10 @@ class PortfolioApp {
         res.textContent = SKILLS_DATA.map(s => `${s.title}: ${s.items.join(", ")}`).join(" | ");
         break;
       case "education":
-        res.textContent = "B.E. Information Technology — St. Francis Institute of Technology, University of Mumbai (expected 2027)";
+        res.textContent = "B.E. Information Technology — SFIT, University of Mumbai (2027)";
         break;
       case "awards":
-        res.textContent = "1st Place, Colloquium 2025 (Itihaas) · Winner, SFIT IT Dept Hackathon · Google GenAI Exchange participant · Social Media Head, IEEE SFIT";
+        res.textContent = "1st Place, Colloquium 2025 · Winner, SFIT IT Hackathon · Google GenAI Exchange · Social Media Head, IEEE SFIT";
         break;
       case "contact":
         res.innerHTML = `email <a class="ink-link" href="mailto:stashlopes27@gmail.com">stashlopes27@gmail.com</a> — or send the postcard below.`;

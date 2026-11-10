@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>A Little Piece of My Universe</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Maru+Gothic:wght@500;700&display=swap">
+<link rel="stylesheet" href="css/film.css">
+</head>
+<body>
+<main class="page">
+  <section class="stage" id="stage" aria-label="Animated short film">
+    <canvas id="film" aria-label="A Little Piece of My Universe, a 55-second animated short"></canvas>
+    <p class="chip" id="chip"></p>
+    <div class="title-card" id="titleCard">
+      <span class="jp">ぼくの宇宙の、ちいさなかけら</span>
+      <h1>A Little Piece<br>of <em>My Universe</em></h1>
+    </div>
+    <div class="end-card" id="endCard">
+      <span class="fin">fin</span>
+      <span class="name">A Little Piece of My Universe</span>
+    </div>
+    <p class="subs" id="subs" aria-live="off"><span class="who" id="subWho"></span><span id="subLine"></span></p>
+    <button class="start" id="start" type="button">Play the film · 0:55</button>
+  </section>
+
+  <div class="bar">
+    <button id="play" type="button" aria-pressed="false">Play</button>
+    <input id="seek" type="range" min="0" max="55" step="0.01" value="0" aria-label="Scrub through the film">
+    <span class="clock" id="clock">0:00 / 0:55</span>
+    <button id="mute" type="button" aria-pressed="false">Sound on</button>
+    <button id="fs" type="button">Fullscreen</button>
+  </div>
+
+  <section class="notes">
+    <h2>Soundtrack notes</h2>
+    <p>The film plays a built-in synthesised score in C major at about 70 BPM. For a final cut, these are the cues to record or license, scene by scene. Select a scene to jump to it.</p>
+    <ol class="cues">
+      <li data-scene="1">
+        <button type="button"><span class="num">I</span>The First Look<span class="time">0:04 – 0:17</span></button>
+        <dl>
+          <div><dt>Music</dt><dd>Solo felt piano, sparse broken chords, lots of space. Hold a single high note when their eyes meet.</dd></div>
+          <div><dt>Ambience</dt><dd>Evening breeze, two or three distant birds, the river far off. Everything drops to near-silence on the close-ups.</dd></div>
+        </dl>
+      </li>
+      <li data-scene="2">
+        <button type="button"><span class="num">II</span>The Smile<span class="time">0:17 – 0:29</span></button>
+        <dl>
+          <div><dt>Music</dt><dd>Piano with pizzicato strings and a glockenspiel answer. A solo violin enters on her smile.</dd></div>
+          <div><dt>Ambience</dt><dd>Soft rain, drops on the umbrella canopy, footsteps on wet stone.</dd></div>
+        </dl>
+      </li>
+      <li data-scene="3">
+        <button type="button"><span class="num">III</span>The Dream<span class="time">0:29 – 0:42</span></button>
+        <dl>
+          <div><dt>Music</dt><dd>Celesta or music box two octaves up, airy choir pad, one harp glissando as the two stars meet.</dd></div>
+          <div><dt>Ambience</dt><dd>Almost none. Faint wind chimes and a low shimmer under the dialogue.</dd></div>
+        </dl>
+      </li>
+      <li data-scene="4">
+        <button type="button"><span class="num">IV</span>The Ending<span class="time">0:42 – 0:55</span></button>
+        <dl>
+          <div><dt>Music</dt><dd>Full strings carry the piano theme home and resolve on a held C major ninth through the fade.</dd></div>
+          <div><dt>Ambience</dt><dd>Warm breeze, evening birds, leaves. Let the last chord ring over black.</dd></div>
+        </dl>
+      </li>
+    </ol>
+  </section>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="js/util.js"></script>
+<script src="js/characters.js"></script>
+<script src="js/scenery.js"></script>
+<script src="js/scenes.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

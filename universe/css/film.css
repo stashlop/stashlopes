@@ -1,0 +1,129 @@
+/* Layout: one 16:9 screen in a dark theatre, programme notes underneath. */
+:root {
+  --night: #150d22;
+  --plum: #2a1a3c;
+  --rule: #4a3560;
+  --cream: #fff3e6;
+  --mist: #c9b6d6;
+  --blossom: #ffb3c9;
+  --sun: #ffc98f;
+  --display: 'Shippori Mincho', 'Hiragino Mincho ProN', 'Yu Mincho', Georgia, serif;
+  --body: 'Zen Maru Gothic', 'Hiragino Maru Gothic ProN', 'Trebuchet MS', system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--night);
+  color: var(--cream);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.6;
+}
+.page {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-block: 20px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ---- the screen ---- */
+.stage {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--plum);
+  border-radius: 6px;
+  overflow: hidden;
+  container-type: inline-size;
+}
+.stage:fullscreen { border-radius: 0; display: grid; place-items: center; background: #000; }
+#film { display: block; width: 100%; height: 100%; cursor: pointer; }
+.stage > div, .stage > p { position: absolute; pointer-events: none; margin: 0; }
+
+.chip {
+  top: 5cqw; left: 5cqw;
+  font-family: var(--display); font-size: clamp(11px, 2.1cqw, 24px); letter-spacing: 0.12em;
+  color: var(--cream); text-shadow: 0 1px 10px rgba(30, 8, 40, 0.8);
+  opacity: 0;
+}
+.title-card, .end-card {
+  inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 1.2cqw; text-align: center; padding: 0 6cqw;
+  text-shadow: 0 2px 22px rgba(30, 8, 40, 0.75);
+}
+.title-card .jp, .end-card .jp { font-family: var(--display); font-size: clamp(10px, 1.7cqw, 20px); letter-spacing: 0.4em; color: var(--blossom); }
+.title-card h1 {
+  margin: 0; font-family: var(--display); font-weight: 500; line-height: 1.15;
+  font-size: clamp(20px, 5.4cqw, 62px); letter-spacing: 0.02em; text-wrap: balance;
+}
+.title-card h1 em { font-style: italic; color: var(--sun); }
+.end-card { opacity: 0; }
+.end-card .fin { font-family: var(--display); font-style: italic; font-size: clamp(22px, 5.6cqw, 64px); }
+.end-card .name { font-family: var(--display); font-size: clamp(11px, 2cqw, 22px); letter-spacing: 0.14em; color: var(--mist); }
+
+.subs {
+  left: 6cqw; right: 6cqw; bottom: 7cqw; text-align: center; opacity: 0;
+  font-size: clamp(12px, 2.5cqw, 28px); line-height: 1.4; font-weight: 500;
+  text-shadow: 0 0 2px #1c0c26, 0 2px 4px #1c0c26, 0 0 18px rgba(28, 12, 38, 0.9);
+}
+.subs[data-who='n'] { font-family: var(--display); font-style: italic; letter-spacing: 0.02em; }
+.subs .who { display: block; font-size: 0.6em; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 700; }
+.subs[data-who='n'] .who { display: none; }
+.subs[data-who='him'] .who { color: var(--sun); }
+.subs[data-who='her'] .who { color: var(--blossom); }
+
+.start {
+  position: absolute; left: 50%; bottom: 7%; transform: translateX(-50%);
+  font: 700 clamp(13px, 2cqw, 18px) var(--body); letter-spacing: 0.08em;
+  color: var(--night); background: var(--cream); border: 0; border-radius: 999px;
+  padding: 0.8em 1.8em; cursor: pointer; white-space: nowrap;
+  box-shadow: 0 6px 30px rgba(20, 6, 30, 0.5);
+}
+.start:hover { background: var(--blossom); }
+
+/* ---- transport ---- */
+.bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.bar button {
+  font: 700 13px var(--body); letter-spacing: 0.06em; color: var(--cream);
+  background: transparent; border: 1px solid var(--rule); border-radius: 999px;
+  padding: 7px 14px; min-width: 76px; cursor: pointer;
+}
+.bar button:hover { border-color: var(--blossom); color: var(--blossom); }
+.bar .clock { font-size: 13px; color: var(--mist); font-variant-numeric: tabular-nums; }
+#seek {
+  flex: 1 1 180px; min-width: 0; height: 18px; margin: 0; background: transparent; cursor: pointer;
+  -webkit-appearance: none; appearance: none; --p: 0%;
+}
+#seek::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: linear-gradient(90deg, var(--blossom) var(--p), var(--rule) var(--p)); }
+#seek::-moz-range-track { height: 4px; border-radius: 2px; background: var(--rule); }
+#seek::-moz-range-progress { height: 4px; border-radius: 2px; background: var(--blossom); }
+#seek::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; margin-top: -5px; border-radius: 50%; background: var(--cream); }
+#seek::-moz-range-thumb { width: 14px; height: 14px; border: 0; border-radius: 50%; background: var(--cream); }
+:is(button, input):focus-visible { outline: 2px solid var(--sun); outline-offset: 3px; }
+
+/* ---- programme notes ---- */
+.notes { margin-top: 26px; display: flex; flex-direction: column; gap: 18px; }
+.notes h2 { margin: 0; font: 500 22px var(--display); letter-spacing: 0.04em; }
+.notes > p { margin: 0; max-width: 62ch; color: var(--mist); font-size: 15px; }
+.cues { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr; gap: 0 28px; }
+@media (min-width: 560px) { .cues { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1000px) { .cues { grid-template-columns: repeat(4, 1fr); } }
+.cues li { min-width: 0; padding: 16px 0 18px; border-top: 1px solid var(--rule); display: flex; flex-direction: column; gap: 8px; }
+.cues li.is-current { border-top-color: var(--blossom); }
+.cues button {
+  all: unset; cursor: pointer; display: flex; align-items: baseline; gap: 10px;
+  font: 500 19px var(--display); color: var(--cream);
+}
+.cues button:hover, .cues li.is-current button { color: var(--blossom); }
+.cues button:focus-visible { outline: 2px solid var(--sun); outline-offset: 3px; }
+.cues .num { color: var(--sun); min-width: 1.6em; }
+.cues .time { margin-left: auto; font: 500 12px var(--body); color: var(--mist); font-variant-numeric: tabular-nums; }
+.cues dl { margin: 0; display: grid; gap: 8px; font-size: 14px; color: var(--mist); }
+.cues dt { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cream); }
+.cues dd { margin: 0; }

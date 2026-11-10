@@ -47,3 +47,9 @@ cd stashlopes
 python -m http.server 3000   # or: npx serve .
 ```
 Open `http://localhost:3000/`.
+
+## A Little Piece of My Universe (`universe/`)
+A 55-second 2D anime short, drawn live on canvas. Open `universe/index.html` to play it.
+- Four scenes on one GSAP master timeline: The First Look, The Smile, The Dream, The Ending.
+- `js/characters.js` is the character rig (walk cycle, blinking, blush, hair sway, IK hands); `js/scenery.js` holds backgrounds, petals, rain and props; `js/scenes.js` holds the timeline, subtitles and one renderer per scene; `js/audio.js` is the synthesised score and ambience.
+- Every frame is a pure function of the film clock, so the scrub bar and scene jumps work anywhere.

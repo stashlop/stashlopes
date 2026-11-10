@@ -387,7 +387,7 @@ class PortfolioApp {
 
     list.innerHTML = EXPERIENCE_DATA.map((exp, i) => `
       <article class="exp-entry">
-        <div class="exp-meta">
+        <div class="exp-meta reveal">
           <div class="stamp exp-date-stamp">
             <span>${escapeHTML(exp.stampTop)}</span>
             <strong>${escapeHTML(exp.stampMain)}</strong>
@@ -419,10 +419,10 @@ class PortfolioApp {
         <figure class="polaroid paste" style="--r:${rot(i)}">
           <span class="tape tape-top" aria-hidden="true"></span>
           <span class="project-badge${p.badgeNow ? " badge-now" : ""}">${escapeHTML(p.badge)}</span>
-          <img src="${p.image}" alt="${escapeHTML(p.imageAlt)}" loading="lazy" />
+          <span class="photo"><img src="${p.image}" alt="${escapeHTML(p.imageAlt)}" loading="lazy" /></span>
           <figcaption>${escapeHTML(p.caption)}</figcaption>
         </figure>
-        <div class="project-note">
+        <div class="project-note reveal">
           <p><strong>${escapeHTML(p.subtitle)}.</strong> ${escapeHTML(p.blurb)}</p>
           <p class="project-stack">${p.stack.map(escapeHTML).join(" · ")}</p>
           <div class="project-actions">
@@ -445,9 +445,25 @@ class PortfolioApp {
   }
 
   filterProjects(category) {
+    const shown = [];
     document.querySelectorAll(".project-card").forEach(card => {
       const show = category === "all" || card.dataset.category === category;
       card.classList.toggle("is-hidden", !show);
+      if (show) shown.push(card);
+    });
+
+    // Re-paste the matching cards so the wall visibly rearranges
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const pieces = shown.flatMap(card => [...card.querySelectorAll(".paste, .reveal")]).filter(el => el.classList.contains("revealed"));
+    pieces.forEach(el => el.classList.remove("revealed"));
+    void document.body.offsetWidth;
+    shown.forEach((card, i) => {
+      card.querySelectorAll(".paste, .reveal").forEach(el => {
+        if (!pieces.includes(el)) return;
+        el.style.setProperty("--stagger", `${Math.min(i * 60, 360)}ms`);
+        el.classList.add("revealed");
+        setTimeout(() => el.style.removeProperty("--stagger"), 1600);
+      });
     });
   }
 
@@ -615,7 +631,7 @@ class PortfolioApp {
         <div class="spread-left">
           <figure class="polaroid">
             <span class="tape tape-top" aria-hidden="true"></span>
-            <img src="${p.image}" alt="${escapeHTML(p.imageAlt)}" />
+            <span class="photo"><img src="${p.image}" alt="${escapeHTML(p.imageAlt)}" /></span>
             <figcaption>${escapeHTML(p.caption)}</figcaption>
           </figure>
           <div class="spread-status"><span class="stamp stamp-red">${escapeHTML(n.status)}</span></div>
@@ -652,7 +668,7 @@ class PortfolioApp {
     if (!modal || modal.hidden) return;
     modal.classList.remove("active");
     document.body.style.overflow = "";
-    setTimeout(() => { modal.hidden = true; }, 200);
+    setTimeout(() => { if (!modal.classList.contains("active")) modal.hidden = true; }, 260);
     if (window.comicAudio) window.comicAudio.playClick();
     if (this.lastFocus) this.lastFocus.focus();
   }
@@ -751,7 +767,20 @@ class PortfolioApp {
     const modal = document.getElementById("project-modal");
     document.getElementById("modal-close-btn")?.addEventListener("click", () => this.closeProjectModal());
     modal?.addEventListener("click", e => { if (e.target === modal) this.closeProjectModal(); });
-    document.addEventListener("keydown", e => { if (e.key === "Escape") this.closeProjectModal(); });
+    document.addEventListener("keydown", e => {
+      if (!modal || modal.hidden) return;
+      if (e.key === "Escape") this.closeProjectModal();
+
+      // Keep keyboard focus inside the open notebook
+      if (e.key === "Tab") {
+        const focusable = [...modal.querySelectorAll("a[href], button:not([disabled])")];
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    });
 
     // Click "THWIP!" words on empty space
     document.addEventListener("click", e => {
